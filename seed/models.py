@@ -10,6 +10,7 @@ class Docente(models.Model):
     email = models.EmailField(primary_key=True, null=False, unique=True)
     nombre = models.CharField(max_length=50)
     codigo = models.CharField(max_length=50)
+    url_img = models.CharField(max_length=250, default="")
     def __str__(self):
         return self.email
 
@@ -24,6 +25,7 @@ class Estudiante(models.Model):
     email = models.EmailField(primary_key=True, null=False, unique=True)
     grupo = models.ForeignKey(Grupo, on_delete = models.DO_NOTHING, default="")
     nombre_estudiante = models.CharField(max_length=50, default="")
+    url_img = models.CharField(max_length=250, default="")
     def __str__(self):
         return self.email
 

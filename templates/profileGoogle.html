@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    {% load socialaccount %}
+<body>
+</body>
+<!-- div container html using bootstrap  -->
+    <div class="container">
+        <figure class="figure"> 
+            <img src="{{ user.socialaccount_set.all.0.extra_data.picture }}" class="figure-img img-fluid rounded" alt="logo">
+        </figure>
+        <div class="row">
+            <h1> Email </h1>  {{ user.email }} <br>
+            <h1> Name </h1> {{ user.socialaccount_set.all.0.extra_data.name }} -  {{user.name}}<br>
+            <h1> Picture </h1> {{ user.socialaccount_set.all.0.extra_data.picture }}  <br>
+            <h1> Email2  </h1> {{ user.socialaccount_set.all.0.extra_data.email }}  <br>
+            <h1> id </h1> {{ user.socialaccount_set.all.0.extra_data.id }}  -  {{user.id}} <br>
+            <h1> name </h1> {{ user.socialaccount_set.all.0.extra_data.name }} -  {{user.name}} <br>
+            <h1> given name  </h1> {{ user.socialaccount_set.all.0.extra_data.given_name }} -  {{user.given_name}}  <br>
+            <h1> family name  </h1> {{ user.socialaccount_set.all.0.extra_data.family_name }} -  {{user.family_name}}  <br>
+            <h1> locale  </h1> {{ user.socialaccount_set.all.0.extra_data.locale }} -  {{user.locale}}  <br>
+            <h1> hd  </h1> {{ user.socialaccount_set.all.0.extra_data.hd }} -  {{user.hd}}  <br>
+         </div>
+    </div>
+</html>
