@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+{% load socialaccount %}
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <h1> Form create docente </h1>
+        <div >
+            <p>You're Teacher? Join us!</p>
+            <form method="POST">
+                {% csrf_token %}    
+                {{ form.email }}
+                {{ form.nombre}}
+                {{ form.url_img }}
+                <input type="hidden" name="email" id="id_email1" placeholder="email" value="{{user.socialaccount_set.all.0.extra_data.email}}" for="{{user.socialaccount_set.all.0.extra_data.email}}">
+                <input type="hidden" name="nombre" id="id_nombre1" placeholder="nombre" value="{{user.socialaccount_set.all.0.extra_data.name}}" >
+                <input type="hidden" name="url_img" id="id_picture1" placeholder="picture" value="{{user.socialaccount_set.all.0.extra_data.picture}}" >
+              
+                <h3>{{user.socialaccount_set.all.0.extra_data.email}} - {{user.socialaccount_set.all.0.extra_data.name}} - {{user.socialaccount_set.all.0.extra_data.picture}}</h3>
+  
+
+                <button type="submit">Submit</button>
+                   
+            </form>
+        </div>
+    </body>
+</html>
+

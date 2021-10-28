@@ -16,13 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls import url, include
-from .views import HomeView, ProfileView
+
 app_name = 'seed'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-
-    path('', HomeView.as_view()),
-    path('profile', ProfileView.as_view(), name='profile'),
     path('accounts/', include('allauth.urls')),
+    path('', include('seed.urls', namespace='seed2')),
     
 ]

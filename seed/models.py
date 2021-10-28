@@ -1,15 +1,12 @@
-from django.db import models
-
-# Create your models here.
 
 from django.db import models
+from django.contrib.auth.models import AbstractBaseUser,PermissionsMixin,BaseUserManager
 
 # Create your models here.
 
 class Docente(models.Model):
     email = models.EmailField(primary_key=True, null=False, unique=True)
     nombre = models.CharField(max_length=50)
-    codigo = models.CharField(max_length=50)
     url_img = models.CharField(max_length=250, default="")
     def __str__(self):
         return self.email
@@ -18,6 +15,7 @@ class Grupo(models.Model):
     codigo_grupo = models.CharField(max_length=50, primary_key=True)
     docente = models.ForeignKey(Docente, on_delete = models.CASCADE)
     nombre = models.CharField(max_length=50,default="")
+    url_img = models.CharField(max_length=250, default="")
     def __str__(self):
         return self.codigo_grupo
 
