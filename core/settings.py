@@ -34,6 +34,7 @@ DEBUG = os.environ.get('DEBUG')
 ALLOWED_HOSTS = ['*']
 
 
+
 # Application definition    
 
 INSTALLED_APPS = [
@@ -52,7 +53,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
 
     # Add the following django apps
-    'core',
     'seed',
 ]
 

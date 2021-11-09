@@ -95,10 +95,23 @@
                     {% if user.is_authenticated %}
                     <a href="{% url 'account_logout' %}" style="text-decoration: none;"
                         class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
-                        Sign Out</a>
-                    <a href="{% url 'seed2:profile' %}" style="text-decoration: none;"
-                        class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
-                        My profile</a>
+                        Sign Out
+                        </a>
+                    
+                        <form method="POST" >
+                            {% csrf_token %}    
+                            {{ form.email }}
+                            {{ form.nombre }}
+                            {{ form.url_img }}
+                            <input type="hidden" name="email" id="id_email1" placeholder="email" value="{{user.socialaccount_set.all.0.extra_data.email}}" >
+                            <input type="hidden" name="nombre" id="nombre" placeholder="nombre" value="{{user.socialaccount_set.all.0.extra_data.name}}" >
+                            <input type="hidden" name="url_img" id="id_picture1" placeholder="picture" value="{{user.socialaccount_set.all.0.extra_data.picture}}" >
+                            <button type="submit" style="text-decoration: none;"
+                                    class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
+                                    My profile
+                            </button>
+                        </form>
+                        
                     {% else %}
                     <div class="google-btn">
                         <a href="{% provider_login_url 'google' %}">

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hello  Student Email Test</h1>
+     <form method="POST" >
+        {% csrf_token %}    
+        {{ form}}
+        <input type="text" name="subject" id="nombre_estudiante" placeholder="Subject"><br> <br> 
+        <input type="textarea" name="message" id="id_picture1" placeholder="Message" ><br> <br> 
+        <input type="file" accept="application/ " name="file" id="id_email1" placeholder="file emails" >  <br> <br> 
+        
+        <button type="submit" style="text-decoration: none;"
+                class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
+                Enviar 
+        </button> 
+        
+
+        
+    </form>
+</html>
