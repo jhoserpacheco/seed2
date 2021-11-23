@@ -1,3 +1,4 @@
+from django.db.models.expressions import Subquery
 from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404, redirect, render
@@ -115,6 +116,7 @@ class GrupoCreationView(View):
     def get(self, request, *args, **kwargs):
         form = GrupoCreateForm()
         context = { 
+            'grupos': Grupo.objects.all(),
             'form':form 
         }
         return render(request, 'Grupos/grupoCreate.html', context)
@@ -134,16 +136,22 @@ class GrupoCreationView(View):
                 return redirect('seed2:createGrupo')
         context={ 
         }
-        return render(request, 'dashboard_docente.html',context)
+        return render(request, 'Grupos/dashboard_docente.html',context)
 
 class GrupoDetailView(View):
 
     def get(self, request, codigo_grupo, *args, **kwargs):
         grupo = get_object_or_404(Grupo, codigo_grupo=codigo_grupo)
-        print(grupo)
+        tema = Tema.objects.filter(grupo_tema=codigo_grupo)
+        actividad = Actividad.objects.filter(
+            tema_actividad=Subquery(tema.values('codigo_tema'))
+        )
         context = { 
             'grupo':grupo,
-            'estudiantes': grupo.estudiante_set.values().all()
+            'estudiantes': grupo.estudiante_set.values().all(),
+            'temas': tema,
+            'actividades': actividad
+
         }
         return render(request, 'Grupos/grupoDetalle.html',context)
 
@@ -167,7 +175,8 @@ class ActividadCreationView(View):
     def get(self, request, *args, **kwargs):
         form = ActividadCreateForm()
         context = { 
-            'form':form 
+            'form':form,
+            'actividades': Actividad.objects.all(),
         }
         return render(request, 'Actividad/actividadCreate.html', context)
 
@@ -219,13 +228,17 @@ class ActividadDeleteView(DeleteView):
 
 
 """
-CRUD DE ACTIVIDADES
+CRUD DE TEMAS
 """
 class TemaCreationView(View):
     def get(self, request, *args, **kwargs):
         form = TemaCreateForm()
+        codigo_tema = request.GET.get('codigo_grupo')
         context = { 
-            'form':form 
+            'temas': Tema.objects.all(),
+            'form':form,
+            'codigo_tema':codigo_tema
+            
         }
         return render(request, 'Tema/temaCreate.html', context)
 
@@ -244,7 +257,7 @@ class TemaCreationView(View):
                 return redirect('seed2:createTema')
         context={ 
         }
-        return render(request, 'Grupo/dashboard_docente.html',context)
+        return render(request, 'Grupos/dashboard_docente.html',context)
 
 class TemaDetailView(View):
 

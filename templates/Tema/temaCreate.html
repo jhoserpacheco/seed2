@@ -1,26 +1,145 @@
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
-    <title>Hello, world!</title>
-  </head>
-  <body>
-    <h1>Hello, Dashboard Create Tema!</h1>
-    <select class="form-select" aria-label="Default select example" value="{{form.nombre_tema }}"></select>
-    <form method="POST">
-        {% csrf_token %}    
-        {{ form.as_p }}
-        
-        <button type="submit">Submit</button>   
-    </form>         
+{% extends "layouts/base-fullscreen.html" %}
+{%load static%}
+{% block title %} Temas {% endblock %}
+{%load static%}
+{% block content %} 
 
 
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-  </body>
-</html>
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 grid-margin">
+                <div class="row">
+                    <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                        <h3 class="font-weight-bold">Bienvenido</h3>
+                        <h6 class="font-weight-normal mb-0">Administrar Temas</h6>
+                    </div>
+                    <div class="col-12 col-xl-4">
+                        <div class="justify-content-end d-flex">
+                            <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
+                                <button class="btn btn-sm btn-light bg-white dropdown-toggle" type="button" id="dropdownMenuDate2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    <i class="mdi mdi-calendar"></i> Today (10 Jan 2021)
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuDate2">
+                                    <a class="dropdown-item" href="#">January - March</a>
+                                    <a class="dropdown-item" href="#">March - June</a>
+                                    <a class="dropdown-item" href="#">June - August</a>
+                                    <a class="dropdown-item" href="#">August - November</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!--espacio para las actividades-->
+            <div class="col-md-7 grid-margin">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Temas</h4>
+                        <!--Actividades-->
+                        {% for t in temas%}
+                        <div class="row p-3">
+                            <div class="row">
+                                <h2 class="pl-3"><a href=""> {{t.nombre_tema}} </a></h2>
+                                <button type="button" class="ml-3 btn btn-primary btn-rounded btn-icon">
+                                    <i class="ti-trash"></i>
+                                </button>
+                                <button type="button" class="ml-1 btn btn-primary btn-rounded btn-icon">
+                                    <i class="ti-pencil"></i>
+                                </button>
+                            </div>
+                            <div class="row">
+                                <p class="pl-3 pr-3 pt-3">
+                                    Lorem ipsum dolor sit amet consectetur adipiscing elit inceptos, justo etiam aliquam odio facilisis morbi. Semper eu morbi risus et fusce lacinia turpis per, est sed massa orci curabitur nulla vulputate,
+                                    vehicula justo elementum nullam placerat torquent vitae. Himenaeos facilisis cum parturient magna nisi quis eros proin sagittis dis enim, gravida magnis aenean platea tempus tristique aliquam ut nostra
+                                    diam. Penatibus vivamus aliquet senectus hendrerit bibendum facilisis convallis, pharetra dui sodales lacinia mus accumsan viverra sociosqu, auctor sociis volutpat class luctus aliquam. At porta placerat
+                                    dapibus rutrum ultrices feugiat libero fringilla ultricies nisi lobortis, laoreet sollicitudin ullamcorper magna sodales est lacinia et dictumst cursus. Potenti massa viverra cubilia mus metus libero
+                                    sociosqu urna, rutrum augue magna etiam eleifend mollis odio, orci tortor maecenas taciti quis ultricies euismod. Lacus massa tellus pretium luctus accumsan primis, commodo in mattis eleifend nisi
+                                    feugiat, erat vehicula hendrerit taciti inceptos.
+                                </p>
+                                <h6 class="pl-3 pr-3">Fecha Inicio 3213/13/31 04:00 | Fecha fin 3213/13/31 04:00</h6>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <!--fin actividades-->
+                    </div>
+                </div>
+            </div>
+            <!--fin espacio para las actividades-->
+
+            <!--espacio para actividades grupos-->
+            <div class="col-md-5 grid-margin">
+                <!--crear las actividades -->
+                <div class="row">
+                    <div class="card w-100 mb-3">
+                        <div class="card-body">
+                            <h4 class="card-title">Crear Temas</h4>
+                            <form class="forms-sample" method="POST">
+                              {% csrf_token %} 
+                                <div class="form-group">
+                                    <label for="codigo_tema">Codigo</label>
+                                    <input type="number" class="form-control" id="codigo_tema" name ="codigo_tema" placeholder="Codigo tema" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="nombre_tema">Nombre</label>
+                                    <input type="text" class="form-control" id="nombre_tema" name ="nombre_tema" placeholder="Nombre Grupo" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleTextarea1">Grupo</label>
+                                    {% if codigo_tema == None %}
+                                        {{form.grupo_tema}}
+                                    {% else %}
+                                        <input type="text" class="form-control"  id="grupo_tema" name ="grupo_tema" value ="{{codigo_tema}}"readonly>
+                                    {% endif %}
+
+                                </div>
+                                <button type="submit" class="btn btn-block btn-primary mr-2">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!--fin crear las actividades -->
+                <!--actividades pendientes-->
+                <div class="row">
+                    <div class="card w-100 p-3">
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <h2 class="card-title col-6">Actividades sin publicar</h2>
+                            </div>
+
+                            <ul class="">
+                              <li><a href="">{% lorem 1 b random %}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--fin actividades pendientes-->
+            </div>
+            <!--fin espacio para actividades grupos-->
+        </div>
+    </div>
+    <!-- content-wrapper ends -->
+</div>
+
+
+
+  {% endblock content %}
+  
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<!-- Plugin js for this page -->
+  <script src="{%static 'vendors/chart.js/Chart.min.js'%}"></script>
+  <script src="{%static 'vendors/datatables.net/jquery.dataTables.js'%}"></script>
+  <script src="{%static 'vendors/datatables.net-bs4/dataTables.bootstrap4.js'%}"></script>
+  <script src="{%static 'js/dataTables.select.min.js'%}"></script>
+  <!-- End plugin js for this page -->
+  <!-- Custom js for this page-->
+  <script src="{%static 'js/dashboard.js'%}"></script>
+  <script src="{%static 'js/Chart.roundedBarCharts.js'%}"></script>
+  <!-- End custom js for this page-->
+{% endblock javascripts %} 
+

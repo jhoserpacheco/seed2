@@ -1,0 +1,34 @@
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item" id="dashboard">
+            <a class="nav-link" href="{% url "seed2:dashboardDocente"%}">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item" id="grupos">
+            <a class="nav-link" href="{% url "seed2:createGrupo"%}" aria-expanded="false" aria-controls="ui-basic">
+              <i class="icon-layout menu-icon"></i>
+              <span class="menu-title">Grupos</span>              
+            </a>
+          </li>
+          <li class="nav-item" id="temas">
+            <a class="nav-link" href="{% url "seed2:createTema"%}" aria-expanded="false" aria-controls="form-elements">
+              <i class="icon-columns menu-icon"></i>
+              <span class="menu-title">Temas</span>              
+            </a>
+          </li>
+          <li class="nav-item" id="actividades">
+            <a class="nav-link"  href="{% url "seed2:createActividad"%}" aria-expanded="false" aria-controls="charts">
+              <i class="icon-bar-graph menu-icon"></i>
+              <span class="menu-title">Actividades</span>             
+            </a>
+          </li>
+          <li class="nav-item" id="notas">
+            <a class="nav-link" href="#tables" aria-expanded="false" aria-controls="tables">
+              <i class="icon-grid-2 menu-icon"></i>
+              <span class="menu-title">Notas</span>              
+            </a>
+          </li>          
+      </ul>
+</nav>

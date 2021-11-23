@@ -1,25 +1,132 @@
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+{% extends "layouts/base-fullscreen.html" %}
+{% load static%}
+{% block title %} Grupos {% endblock %}
+{% load static%}
+{% block content %} 
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+      <div class="main-panel" onload="gruposActive()">
+        <div class="content-wrapper">
+          
+          <div class="row">
+            <div class="col-md-12 grid-margin">
+              <div class="row">
+                <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                  <h3 class="font-weight-bold">Bienvenido</h3>
+                  <h6 class="font-weight-normal mb-0">Administrar Grupos </h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="row">
+            <!--espacio para los grupos-->
+            <div class="col-md-7 grid-margin stretch-card">
+              <div class="card">
+              
+                <div class="row" >
+                  {% for g in grupos %}
+                    <div class="col m-3  grid-margin transparent" >
+                    <a href="{% url 'seed2:detailGrupo' g.codigo_grupo %}" style="text-decoration: none;">
+                      <div class="card card-tale" >
+                        <div class="card-body">
+                          <p class="mb-4" >{{g.codigo_grupo}}</p>
+                          <p class="fs-30 mb-2">{{g.nombre}}</p>
+                          <p>{{g.docente}}</p>
+                        </div>
+                      </div>
+                      <a/>
+                    </div>
+                  {% endfor %}
+                  </div>
+                
+              </div>
+            </div>
+            <!--fin espacio para los grupos-->
 
-    <title>Hello, world!</title>
-  </head>
-  <body>
-    <h1>Hello, Dashboard Create Docente!</h1>
-     
-    <form method="POST">
-        {% csrf_token %}    
-        {{ form }}
-        <button type="submit">Submit</button>   
-    </form>         
+            <!--espacio para crear grupos-->
+              <div class="col-md-5 grid-margin">
+                <div class="row">
+                    <div class="card w-100 mb-3">
+                      <div class="card-body">
+                        <h4 class="card-title">Crear Grupos </h4>
+                        <form class="forms-sample" method='POST'>
+                        {% csrf_token %} 
+                        {{form.hidden}}
+                          <div class="form-group">
+                            <label for="codigo_grupo">Codigo</label>
+                            <input type="text" class="form-control" id="codigo_grupo" name="codigo_grupo" placeholder="Codigo Grupo">
+                          </div>
 
+                          <div class="form-group">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre Grupo">
+                          </div>
 
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-  </body>
-</html>
+                          <div class="form-group">
+                            <label >Docente</label>
+                            {{form.docente}}
+                          </div>
+
+                          <div class="form-group">
+                            <label >Estado</label>
+                            {{form.estado}}
+                          </div>
+                          <!-- 
+                          <div class="form-group">
+                            <label>Lista de estudiantes</label>
+                            <input type="file" name="img[]" class="file-upload-default">
+                            <div class="input-group col-xs-12">
+                              <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+                              <span class="input-group-append">
+                                <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                              </span>
+                            </div>
+                          </div>    
+                          -->                  
+                          <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                          
+                        </form>
+                      </div>
+                    </div>
+                </div>
+                <div class="row ">
+                  <div class="card w-100">
+                      <div class="card-body">
+                        <h4 class="card-title">Informacion General</h4>
+                        <ul class="">
+                          <li><a href="">item 1</li>
+                          <li><a href="">item 2</li>
+                          <li><a href="">item 3</li>
+                          <li><a href="">item 4</li>
+                          <li><a href="">item 5</li>
+                          <li><a href="">item 6</li>
+                          <li><a href="">item 7</li>
+                        </ul>
+                      </div>
+                  </div>
+                </div>
+                
+              </div>
+            <!--fin espacio para crear grupos-->
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+      </div>
+
+  {% endblock content %}
+  
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<!-- Plugin js for this page -->
+  <script src="{%static 'vendors/chart.js/Chart.min.js'%}"></script>
+  <script src="{%static 'vendors/datatables.net/jquery.dataTables.js'%}"></script>
+  <script src="{%static 'vendors/datatables.net-bs4/dataTables.bootstrap4.js'%}"></script>
+  <script src="{%static 'js/dataTables.select.min.js'%}"></script>
+  <!-- End plugin js for this page -->
+  <!-- Custom js for this page-->
+  <script src="{%static 'js/dashboard.js'%}"></script>
+  <script src="{%static 'js/Chart.roundedBarCharts.js'%}"></script>
+  <script src="{%static 'js/gruposActive.js'}"
+  <!-- End custom js for this page-->
+{% endblock javascripts %} 
+

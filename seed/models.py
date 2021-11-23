@@ -88,7 +88,7 @@ class Estudiante(Usuario):
 class Tema(models.Model): 
     codigo_tema = models.IntegerField(primary_key=True, default="")
     nombre_tema = models.CharField(max_length=50, default="")
-    grupo_tema = models.OneToOneField(Grupo, on_delete = models.CASCADE)
+    grupo_tema = models.ForeignKey(Grupo, on_delete = models.CASCADE)
     class Meta:
         verbose_name = "Tema"
         verbose_name_plural = "Temas"
