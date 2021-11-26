@@ -30,5 +30,7 @@ urlpatterns = [
     path('dashboardDocente/tema/<int:codigo>/', TemaDetailView.as_view(), name='detailTema'),
     path('dashboardDocente/tema/<pk>/update/', TemaUpdateView.as_view(), name='updateTema'),
     path('dashboardDocente/tema/<pk>/delete/', TemaDeleteView.as_view(), name='deleteTema'), 
+    path('dashboardDocente/tema/<pk>/actividades/', TemaActividadView.as_view(), name='temaActividades'), 
+    
     
 ]

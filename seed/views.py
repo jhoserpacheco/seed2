@@ -1,4 +1,5 @@
 from django.db.models.expressions import Subquery
+from datetime import datetime, timedelta
 from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404, redirect, render
@@ -172,6 +173,7 @@ CRUD DE ACTIVIDADES
 """
 
 class ActividadCreationView(View):
+
     def get(self, request, *args, **kwargs):
         form = ActividadCreateForm()
         context = { 
@@ -208,7 +210,7 @@ class ActividadDetailView(View):
 
     def get(self, request, codigo, *args, **kwargs):
         actividad = get_object_or_404(Actividad, codigo=codigo)
-        print(actividad)
+        print(type(actividad.fecha_inicio))
         context = { 
             'actividad':actividad
         }
@@ -267,7 +269,7 @@ class TemaDetailView(View):
         context = { 
             'tema':tema
         }
-        return render(request, 'Tema/temaDetalle.html',context)
+        return render(request, 'Tema/temaDetalle.html', context)
 
 class TemaUpdateView(UpdateView):
     model = Tema
@@ -280,3 +282,11 @@ class TemaDeleteView(DeleteView):
     model = Tema
     template_name = 'Tema/temaEliminar.html'
     success_url = reverse_lazy('seed2:dashboardDocente')
+
+class TemaActividadView(View):
+    def get(self, request, pk,*args, **kwargs):
+        actividad = Actividad.objects.filter(tema_actividad=pk)
+        context={
+            'actividades': actividad
+        }
+        return render(request, 'Tema/temaActividades.html', context)

@@ -1,5 +1,6 @@
 from django import forms
 from allauth.socialaccount.models import SocialAccount
+from django.forms.widgets import DateTimeInput
 from .models import Estudiante, Docente, Grupo, Actividad, Tema
 
 class TeacherCreateForm(forms.ModelForm):
@@ -22,13 +23,18 @@ class GrupoCreateForm(forms.ModelForm):
         fields = {'codigo_grupo', 'nombre', 'docente', 'estado'}
 
 class ActividadCreateForm(forms.ModelForm):
-    fecha_inicio = forms.DateTimeField(widget=forms.DateInput(attrs={'type': 'date'}))
-    fecha_fin = forms.DateTimeField(widget=forms.DateInput(attrs={'type': 'date'}))
+    fecha_inicio = forms.DateTimeField(widget=forms.DateInput(attrs={'type': 'datetime-local'}))
+    fecha_fin = forms.DateTimeField(widget=forms.DateInput(attrs={'type': 'datetime-local'}))
 
     class Meta:
         model = Actividad
         fields = {'codigo', 'nombre_ac', 'descripcion', 'estructura_de_datos', 'tema_actividad', 'fecha_inicio', 'fecha_fin', 'es_visible'}
-        format = {'fecha_inicio': '%d/%m/%Y', 'fecha_fin': '%d/%m/%Y'}
+        format = {
+            'fecha_inicio': DateTimeInput(attrs={'type': 'datetime-local'}),
+            'fecha_fin': DateTimeInput(attrs={'type': 'datetime-local'}),
+            'es_visible': 'RadioSelect'
+            }
+
 
 class TemaCreateForm(forms.ModelForm):
     class Meta:

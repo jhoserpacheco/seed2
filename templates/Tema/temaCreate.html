@@ -44,7 +44,7 @@
                         {% for t in temas%}
                         <div class="row p-3">
                             <div class="row">
-                                <h2 class="pl-3"><a href=""> {{t.nombre_tema}} </a></h2>
+                                <h2 class="pl-3"><a href="{% url 'seed2:updateTema' t.codigo_tema %}"> {{t.nombre_tema}} </a></h2>
                                 <button type="button" class="ml-3 btn btn-primary btn-rounded btn-icon">
                                     <i class="ti-trash"></i>
                                 </button>
@@ -79,7 +79,7 @@
                         <div class="card-body">
                             <h4 class="card-title">Crear Temas</h4>
                             <form class="forms-sample" method="POST">
-                              {% csrf_token %} 
+                                {% csrf_token %} 
                                 <div class="form-group">
                                     <label for="codigo_tema">Codigo</label>
                                     <input type="number" class="form-control" id="codigo_tema" name ="codigo_tema" placeholder="Codigo tema" />

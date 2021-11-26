@@ -115,6 +115,18 @@ class Actividad(models.Model):
     fecha_inicio = models.DateTimeField()
     fecha_fin = models.DateTimeField()
     es_visible = models.BooleanField(default=True)
+
+    def timeleft(self):
+        nowt = now()
+        fechaFin = self.fecha_fin
+        restante = abs(fechaFin - nowt)
+        stringLeft = str(restante.days) + " Dias, " + str(restante.seconds//3600)+ " Horas, "+str(restante.seconds//60%60)+ " Minutos, "+ str( restante.seconds%60) + " Segundos"
+        if fechaFin < nowt:
+            return stringLeft + " Atrasado"
+        else:
+            return stringLeft + " Restante"
+        
+
     class Meta:
         verbose_name = "Actividad"
         verbose_name_plural = "Actividades"

@@ -1,34 +1,130 @@
-<html lang="en">
-    <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+{% extends "layouts/base-fullscreen.html" %}
+{%load static%}
+{% block title %} Tema Detalle {% endblock %}
+{%load static%}
+{% block content %} 
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
-    <title>Hello, world!</title>
-    </head>
-    <body>
-    <h1>Hello, Actividad Detalle!</h1>
 
-    <h3>codigo: {{actividad.codigo}}</h3>   
-    <h3>nombre_ac: {{actividad.nombre_ac}}</h3>   
-    <h3>descripcion: {{actividad.descripcion}}</h3>   
-    <h3>estructura_de_datos: {{actividad.estructura_de_datos}}</h3>   
-    <h3>tema_actividad: {{actividad.tema_actividad}}</h3>   
-    <h3>fecha_inicio: {{actividad.fecha_inicio}}</h3>   
-    <h3>fecha_fin: {{actividad.fecha_fin}}</h3>   
-    <h3>es_visible: {{actividad.es_visible}}</h3>   
-    
+<div class="main-panel">
+    <div class="content-wrapper">
 
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        
-        <input type="submit" value="Update">
-    </form>
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    </body>
-</html>
+        <div class="row">
+            <!--espacio para las actividades-->
+            <div class="col-md-7 grid-margin">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Actividades</h4>
+                        <!--Actividades-->
+
+                            <h3>codigo: {{actividad.codigo}}</h3>   
+                            <h3>nombre_ac: {{actividad.nombre_ac}}</h3>   
+                            <h3>descripcion: {{actividad.descripcion}}</h3>   
+                            <h3>estructura_de_datos: {{actividad.estructura_de_datos}}</h3>   
+                            <h3>tema_actividad: {{actividad.tema_actividad}}</h3>   
+                            <h3>fecha_inicio: {{actividad.fecha_inicio}}</h3>   
+                            <h3>fecha_fin: {{actividad.fecha_fin}}</h3>   
+                            <h3>es_visible: {{actividad.es_visible}}</h3>   
+                        <!--fin actividades-->
+                    </div>
+                </div>
+            </div>
+            <!--fin espacio para las actividades-->
+
+            <!--espacio para actividades grupos-->
+            <div class="col-md-5 grid-margin">
+                <!--crear las actividades -->
+                <div class="row">
+                    <div class="card w-100 mb-3">
+                        <div class="card-body">
+                            <h4 class="card-title">Actualizar Tema</h4>
+                                <form class="forms-sample" method="POST">
+                                    {% csrf_token %}
+                                    <div class="row">                            
+                                    <div class="form-group col">
+                                        <label for="exampleInputName1">Codigo Actividad</label>
+                                        <input type="number" class="form-control" id="codigo" name="codigo" placeholder="Name" min="1" value='{{actividad.codigo}}' disabled>
+                                    </div>
+                                    <div class="form-group col">
+                                        <label for="exampleInputName1">Nombre Actividad</label>
+                                        <input type="text" class="form-control" id="nombre_ac" name="nombre_ac" placeholder="Name" value='{{actividad.nombre_ac}}'>
+                                    </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleTextarea1">Descripcion</label>
+                                        <textarea class="form-control" id="descripcion" name="descripcion" rows="4">{{actividad.descripcion}}</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                    <label for="exampleInputName1">Tema Actividad</label><br>
+                                        {{form.tema_actividad}}
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleTextarea1">Estructura de datos</label><br>
+                                        {{form.estructura_de_datos}}
+                                    </div>
+                                    <div class="row">                            
+                                    <div class="form-group col">
+                                        <label for="exampleTextarea1">Fecha inicio</label>
+                                        <input class="form-control"  id="fecha_inicio" name="fecha_inicio" type="datetime-local" min="today" value='{{actividad.fecha_inicio}}'>
+                                    </div>
+                                    <div class="form-group col">
+                                        <label for="exampleTextarea1">Fecha fin</label>
+                                        <input class="form-control"  id="fecha_fin" name="fecha_fin" type="datetime-local" min="today">
+                                    </div>
+                                    </div>
+
+                                    <div class="row pl-3 pr-3 pb-3">
+                                    <label for="exampleTextarea1">Visibilidad
+                                    <div class="form-check col">
+                                        <label class="form-check-label">
+                                        {{form.es_visible}} 
+                                        Mostrar
+                                        </label>
+                                    </div></label>
+                                    
+                                    </div>
+                                <button type="submit" class="btn btn-block btn-primary mr-2">Update</button>   
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!--fin crear las actividades -->
+                <!--actividades pendientes-->
+                <div class="row">
+                    <div class="card w-100 p-3">
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <h2 class="card-title col-6">Actividades sin publicar</h2>
+                            </div>
+
+                            <ul class="">
+                                <li><a href="">{% lorem 1 b random %}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--fin actividades pendientes-->
+            </div>
+            <!--fin espacio para actividades grupos-->
+        </div>
+    </div>
+    <!-- content-wrapper ends -->
+</div>
+
+
+
+  {% endblock content %}
+  
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<!-- Plugin js for this page -->
+    <script src="{%static 'vendors/chart.js/Chart.min.js'%}"></script>
+    <script src="{%static 'vendors/datatables.net/jquery.dataTables.js'%}"></script>
+    <script src="{%static 'vendors/datatables.net-bs4/dataTables.bootstrap4.js'%}"></script>
+    <script src="{%static 'js/dataTables.select.min.js'%}"></script>
+    <!-- End plugin js for this page -->
+    <!-- Custom js for this page-->
+    <script src="{%static 'js/dashboard.js'%}"></script>
+    <script src="{%static 'js/Chart.roundedBarCharts.js'%}"></script>
+    <!-- End custom js for this page-->
+{% endblock javascripts %} 

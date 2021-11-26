@@ -1,0 +1,4 @@
+<h1> Hello TA </h1>
+{% for a in actividades%}
+    <h3> <a href="{% url 'seed2:detailActividad' a.codigo %}"> {{a}} </a> </h3>
+{% endfor %}

@@ -29,14 +29,15 @@
                   <div class="row pt-2 pb-3">
                     <!--fields = {'codigo', 'nombre_ac', 'descripcion', 'estructura_de_datos', 'tema_actividad', 'fecha_inicio', 'fecha_fin', 'es_visible'}-->    
                     <div class="md-6">
-                      <h2 class="pl-3"> <a href="">{{a.nombre_ac}}</a></h2>
+                      <h2 class="pl-3"> <a href="{% url 'seed2:updateActividad' a.codigo%}">{{a.nombre_ac}}</a></h2>
                       <h6 class="pl-3">{{a.codigo}}</h6>
-                      
-                      <h6 class="pl-3 pr-3">Estructura de datos: {{a.estructura_de_datos}}</h6>
                       <p  class="pl-3 pr-3">{{a.descripcion}}</p>
-                      <h6 class="pl-3 pr-3">Fecha Inicio {{a.fecha_inicio}} | Fecha fin {{a.fecha_fin}}</h6> 
+                      <h6 class="pl-3 pr-3">Estructura de datos: {{a.estructura_de_datos}}</h6>
+                      <h6 class="pl-3 pr-3">Fecha Inicio {{a.fecha_inicio}} </h6>  
+                      <h6 class="pl-3 pr-3">Fecha fin {{a.fecha_fin}}</h6> 
                       <h6 class="pl-3 pr-3">Tema actividad: {{a.tema_actividad}} </h6> 
-                      <h6 class="pl-3 pr-3">Es visible: {{a.es_visible}} </h6> 
+                      <h6 class="pl-3 pr-3">Now: {{ a.timeleft }} </h6> 
+                      
 
                       
 
@@ -50,7 +51,7 @@
                         </button>
                         -->      
                   </div>
-                       {% endfor %}
+                      {% endfor %}
                 <!--fin actividades-->                    
                 </div>
               </div>
@@ -64,44 +65,58 @@
                     <div class="card w-100 mb-3">
                       <div class="card-body">
                         <h4 class="card-title">Crear Actividad</h4> 
-                        <form class="forms-sample">
-                          <div class="form-group">
-                            <label for="exampleInputName1">Nombre</label>
-                            <input type="text" class="form-control" id="exampleInputName1" placeholder="Name">
+                        <!--Form Actividades-->
+                        <!--{'codigo', 'nombre_ac', 'descripcion', 'estructura_de_datos', 'tema_actividad', 'fecha_inicio', 'fecha_fin', 'es_visible'}-->
+                        <form class="forms-sample" method="POST">
+                          {% csrf_token %}
+                          <div class="row">                            
+                            <div class="form-group col">
+                              <label for="exampleInputName1">Codigo Actividad</label>
+                              <input type="number" class="form-control" id="codigo" name="codigo" placeholder="Name" min="1" required>
+                            </div>
+                            <div class="form-group col">
+                              <label for="exampleInputName1">Nombre Actividad</label>
+                              <input type="text" class="form-control" id="nombre_ac" name="nombre_ac" placeholder="Name">
+                            </div>
                           </div>
                           <div class="form-group">
                               <label for="exampleTextarea1">Descripcion</label>
-                              <textarea class="form-control" id="exampleTextarea1" rows="4"></textarea>
+                              <textarea class="form-control" id="descripcion" name="descripcion" rows="4"></textarea>
+                          </div>
+                          <div class="form-group">
+                            <label for="exampleInputName1">Tema Actividad</label><br>
+                            {{form.tema_actividad}}
+                          </div>
+                          <div class="form-group">
+                              <label for="exampleTextarea1">Estructura de datos</label><br>
+                              {{form.estructura_de_datos}}
                           </div>
                           <div class="row">                            
                             <div class="form-group col">
                               <label for="exampleTextarea1">Fecha inicio</label>
-                              <input class="form-control" type="datetime-local">
+                              <input class="form-control"  id="fecha_inicio" name="fecha_inicio" type="datetime-local" min="today">
+                              
                             </div>
                             <div class="form-group col">
                               <label for="exampleTextarea1">Fecha fin</label>
-                              <input class="form-control" type="datetime-local">
+                              <input class="form-control"  id="fecha_fin" name="fecha_fin" type="datetime-local" min="today">
                             </div>
                           </div>
 
                           <div class="row pl-3 pr-3 pb-3">
+                          <label for="exampleTextarea1">Visibilidad
                             <div class="form-check col">
                               <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="publicar" id="membershipRadios1" value=""checked >
-                                Ocultar
+                                {{form.es_visible}} 
+                                Mostrar
                               </label>
-                              
-                            </div>
-                            <div class="form-check col">
-                              <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="publicar" id="membershipRadios1" value=""  >
-                                Publicar
-                              </label>                              
-                            </div>
+                            </div></label>
+                            
                           </div>
                           <button type="submit" class="btn btn-block btn-primary mr-2">Submit</button>
                           
                         </form>
+                        <!--End Form Actividades-->
                       </div>
                     </div>
                 </div>
