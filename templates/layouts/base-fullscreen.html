@@ -28,7 +28,9 @@
     <!-- endinject -->
 
     <link rel="shortcut icon" href="{%static 'images/favicon.png'%}">    
-    
+    <!--- Custom datatables -->
+    <link rel="stylesheet" type="text/css" href="{%static 'DataTables/datatables.min.css'%}"/>
+
     <!-- Specific CSS goes HERE -->
     {% block stylesheets %}{% endblock stylesheets %}    
 
@@ -60,6 +62,12 @@
     <script src="{%static 'js/template.js'%}"></script>
     <script src="{%static 'js/settings.js'%}"></script>
     <script src="{%static 'js/todolist.js'%}"></script>
+    <script type="text/javascript" src="{%static 'DataTables/datatables.min.js'%}"></script>
+    <script type="text/javascript">
+    $(document).ready( function () {
+    $('#DataTable').DataTable();
+    } );
+    </script>
     <!-- endinject -->
     {% block javascripts %}{% endblock javascripts %}
 
