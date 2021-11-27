@@ -1,7 +1,7 @@
 {% extends "layouts/base-fullscreen.html" %}
-{%load static%}
+{% load static%}
 {% block title %} Tema Detalle {% endblock %}
-{%load static%}
+{% load static%}
 {% block content %} 
 
 
@@ -19,8 +19,19 @@
                             <h1>Hello, Tema Detalle!</h1>
                             <h3>codigo_tema: {{tema.codigo_tema}}</h3>   
                             <h3>nombre_tema: {{tema.nombre_tema}}</h3>   
-                            <h3>grupo_tema: {{tema.grupo_tema}}</h3>   
-                            <h3><a href="{% url 'seed2:temaActividades' tema.codigo_tema%}"> Ver Actividades del tema </a></h3>   
+                            <h3>grupo_tema: {{tema.grupo_tema}}</h3>    
+                        <!--fin actividades-->
+                    </div>
+                </div>
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <!--Actividades-->
+                            <h1 class="mb-4">Actividades - {{tema.nombre_tema}} </h1> 
+                            <ul>
+                                {% for a in actividades%}
+                                    <h3 class="ml-3 mt-2 mb-3"> <a href="{% url 'seed2:detailActividad' a.codigo %}"> {{a}} </a> </h3>
+                                {% endfor %}
+                                </ul>
                         <!--fin actividades-->
                     </div>
                 </div>
@@ -67,11 +78,13 @@
                             </ul>
                         </div>
                     </div>
+                    
                 </div>
                 <!--fin actividades pendientes-->
             </div>
             <!--fin espacio para actividades grupos-->
         </div>
+        
     </div>
     <!-- content-wrapper ends -->
 </div>

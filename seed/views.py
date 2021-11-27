@@ -222,6 +222,7 @@ class ActividadUpdateView(UpdateView):
     success_url = reverse_lazy('seed2:dashboardDocente')
 
 
+
 class ActividadDeleteView(DeleteView):
     model = Actividad
     template_name = 'Actividad/actividadEliminar.html'
@@ -235,10 +236,11 @@ class TemaCreationView(View):
     def get(self, request, *args, **kwargs):
         form = TemaCreateForm()
         codigo_tema = request.GET.get('codigo_grupo')
+        tema = Tema.objects.all()
         context = { 
-            'temas': Tema.objects.all(),
+            'temas': tema,
             'form':form,
-            'codigo_tema':codigo_tema
+            'codigo_tema':codigo_tema, 
             
         }
         return render(request, 'Tema/temaCreate.html', context)
@@ -264,13 +266,10 @@ class TemaDetailView(View):
 
     def get(self, request, codigo, *args, **kwargs):
         tema = get_object_or_404(Tema, codigo_tema=codigo)
-        actividadesTema = Actividad.objects.filter(
-            tema_actividad=Subquery(tema.values('codigo_tema'))
-        )
-        print(tema)
-        context = { 
+        codigo_tema = tema.codigo_tema
+        context={
             'tema':tema,
-            'actividadesTema' : actividadesTema
+            'codigo_tema':codigo_tema,
         }
         return render(request, 'Tema/temaDetalle.html', context)
 
@@ -279,6 +278,15 @@ class TemaUpdateView(UpdateView):
     fields = fields = {'codigo_tema', 'nombre_tema', 'grupo_tema'}
     template_name = 'Tema/temaDetalle.html'
     success_url = reverse_lazy('seed2:dashboardDocente')
+
+    def get(self, request, pk, *args, **kwargs):
+        tema = get_object_or_404(Tema, codigo_tema=pk)
+        actividades = Actividad.objects.filter(tema_actividad=pk)
+        context={
+            'tema':tema,
+            'actividades':actividades,
+        }
+        return render(request, 'Tema/temaDetalle.html', context)
 
 
 class TemaDeleteView(DeleteView):
@@ -293,3 +301,8 @@ class TemaActividadView(View):
             'actividades': actividad
         }
         return render(request, 'Tema/temaActividades.html', context)
+
+
+"""
+CRUD DE ESTUDIANTE ACTIVIDAD
+"""
