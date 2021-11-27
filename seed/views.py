@@ -210,9 +210,8 @@ class ActividadDetailView(View):
 
     def get(self, request, codigo, *args, **kwargs):
         actividad = get_object_or_404(Actividad, codigo=codigo)
-        print(type(actividad.fecha_inicio))
         context = { 
-            'actividad':actividad
+            'actividad': actividad,
         }
         return render(request, 'Actividad/actividadDetalle.html',context)
 

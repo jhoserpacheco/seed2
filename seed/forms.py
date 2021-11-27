@@ -29,6 +29,9 @@ class ActividadCreateForm(forms.ModelForm):
     class Meta:
         model = Actividad
         fields = {'codigo', 'nombre_ac', 'descripcion', 'estructura_de_datos', 'tema_actividad', 'fecha_inicio', 'fecha_fin', 'es_visible'}
+        widgets = {
+            'descripcion': forms.Textarea(attrs={'rows': 5, 'cols': 40}),
+        }
         format = {
             'fecha_inicio': DateTimeInput(attrs={'type': 'datetime-local'}),
             'fecha_fin': DateTimeInput(attrs={'type': 'datetime-local'}),

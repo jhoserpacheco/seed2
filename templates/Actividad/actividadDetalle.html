@@ -25,6 +25,10 @@
                             <h3>fecha_inicio: {{actividad.fecha_inicio}}</h3>   
                             <h3>fecha_fin: {{actividad.fecha_fin}}</h3>   
                             <h3>es_visible: {{actividad.es_visible}}</h3>   
+                            <h3>Fecha Inicio: {{actividad.getFechaInicio}}</h3>   
+                            <h3>Fecha Fin: {{actividad.getFechaFin}}</h3> 
+                            <h3>Fecha Fin2: 2015-01-02 11:42:13.510</h3>  
+                                                
                         <!--fin actividades-->
                     </div>
                 </div>
@@ -52,7 +56,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleTextarea1">Descripcion</label>
-                                        <textarea class="form-control" id="descripcion" name="descripcion" rows="4">{{actividad.descripcion}}</textarea>
+                                        <textarea class="form-control" id="descripcion" name="descripcion" value=''rows="4">{{actividad.descripcion}}</textarea>
                                     </div>
                                     <div class="form-group">
                                     <label for="exampleInputName1">Tema Actividad</label><br>
@@ -63,14 +67,14 @@
                                         {{form.estructura_de_datos}}
                                     </div>
                                     <div class="row">                            
-                                    <div class="form-group col">
-                                        <label for="exampleTextarea1">Fecha inicio</label>
-                                        <input class="form-control"  id="fecha_inicio" name="fecha_inicio" type="datetime-local" min="today" value='{{actividad.fecha_inicio}}'>
-                                    </div>
-                                    <div class="form-group col">
-                                        <label for="exampleTextarea1">Fecha fin</label>
-                                        <input class="form-control"  id="fecha_fin" name="fecha_fin" type="datetime-local" min="today">
-                                    </div>
+                                        <div class="form-group col">
+                                            <label for="exampleTextarea1">Fecha inicio</label>
+                                            <input class="form-control"  id="fecha_inicio" name="fecha_inicio" type="datetime-local" value='{{actividad.getFechaInicio}}'>
+                                        </div>
+                                        <div class="form-group col">
+                                            <label for="exampleTextarea1">Fecha fin</label>
+                                            <input class="form-control"  id="fecha_fin" name="fecha_fin" type="datetime-local" value='{{actividad.getFechaFin}}'>
+                                        </div>
                                     </div>
 
                                     <div class="row pl-3 pr-3 pb-3">
