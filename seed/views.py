@@ -264,9 +264,13 @@ class TemaDetailView(View):
 
     def get(self, request, codigo, *args, **kwargs):
         tema = get_object_or_404(Tema, codigo_tema=codigo)
+        actividadesTema = Actividad.objects.filter(
+            tema_actividad=Subquery(tema.values('codigo_tema'))
+        )
         print(tema)
         context = { 
-            'tema':tema
+            'tema':tema,
+            'actividadesTema' : actividadesTema
         }
         return render(request, 'Tema/temaDetalle.html', context)
 

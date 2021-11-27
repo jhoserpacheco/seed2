@@ -127,10 +127,10 @@ class Actividad(models.Model):
             return stringLeft + " Restante"
         
     def getFechaInicio(self):
-        return self.fecha_inicio.strftime("%Y-%m-%d %H:%M:%S")
+        return self.fecha_inicio.strftime("%Y-%m-%d %I:%M:%S")
 
     def getFechaFin(self):
-        return self.fecha_fin.strftime("%Y-%m-%d %H:%M:%S")
+        return self.fecha_fin.strftime("%Y-%m-%d %I:%M:%S")
 
     class Meta:
         verbose_name = "Actividad"
