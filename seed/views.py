@@ -37,7 +37,6 @@ class logou(View):
     
     def get(self, request, *args, **kwargs):
         context={}
-        print('objeto request.........',request)
         logout(request)
         return render(request, 'Cuenta/login.html', context)
         
@@ -48,11 +47,9 @@ class logi(View):
         return render(request, 'Cuenta/login.html', context)
     def post(self, request, *args, **kwargs):
         if request.method == 'POST':
-            print("objeto post .............",request.POST)
             username = request.POST['useremail']
             password = request.POST['userpassword']
             user = authenticate(username=username, password=password)
-            print("user..........",user)
             if user is not None:
                 login(request, user)
                 return redirect('seed2:dashboardDocente')
@@ -61,7 +58,6 @@ class logi(View):
 
 
 class loging(View):
-    print("loging...................")
     def get(self, request, *args, **kwargs):
         context={
         }

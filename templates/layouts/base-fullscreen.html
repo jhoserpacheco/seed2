@@ -68,6 +68,25 @@
     $('#DataTable').DataTable();
     } );
     </script>
+    <script type="text/javascript">
+        $(document).ready( function () {
+
+            const currentLocation = location.href;
+            const menuItems = document.querySelectorAll('#menuItem');
+            const menuLength = menuItems.length;            
+            for (let i=0; i<menuLength; i++){
+                
+                if (menuItems[i].firstElementChild.href === currentLocation){                    
+                    menuItems[i].classList.add('active');
+                }
+                else{
+                    menuItems[i].classList.remove('active');
+                }
+            }
+            
+        } );        
+    </script>
+    
     <!-- endinject -->
     {% block javascripts %}{% endblock javascripts %}
 
