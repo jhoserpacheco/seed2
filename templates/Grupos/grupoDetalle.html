@@ -7,136 +7,138 @@
 {%endblock%} 
 {% block content %} 
     <div class="main-panel">
-    <div class="content-wrapper">
-        <div class="row">
-        <div class="col-md-12 grid-margin">
+        <div class="content-wrapper">
             <div class="row">
-            <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                <h3 class="font-weight-bold">Bienvenido</h3>
-                <h6 class="font-weight-normal mb-0">Detalles Grupo </h6>
+            <div class="col-md-12 grid-margin">
+                <div class="row">
+                <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                    <h3 class="font-weight-bold">Bienvenido</h3>
+                    <h6 class="font-weight-normal mb-0">Detalles Grupo </h6>
+                </div>
+                </div>
             </div>
             </div>
-        </div>
-        </div>
-        <div class="row">
-        <!--espacio para los grupos-->
-        <div class="col-md-7 grid-margin stretch-card">     
             <div class="row">
-                <div class=" card w-100 mr-3 mb-3">
-                    <div class="col m-3  grid-margin transparent">
+            <!--espacio para los grupos-->
+            <div class="col-md-7 grid-margin stretch-card">     
+                <div class="row">
+                    <div class=" card w-100 mr-3 mb-3">
+                        <div class="col m-3  grid-margin transparent">
+                            <div class="card-body">
+                                <div class="row">
+                                <h1 class="display-1 col">{{grupo.nombre}}</h1>
+                                <h1 class="display-4 d-flex justify-content-center align-items-center col">Estado: {{grupo.estado}} </h1>
+                                </div>
+                                <h1 class="display-3">Codigo: {{grupo.codigo_grupo}}</h1>
+                                <h1 class="display-4">Docente: {{grupo.docente}}</h1>                            
+                            </div>
+                        </div>
+                    </div>   
+
+                    <div class="card w-100 mr-3 mb-3">
+                        <div class="col m-3  grid-margin transparent">
+                            <div class="card-body">
+                                <h1 class="display-1">Estudiantes</h1>
+                                    <div class="table-responsive">
+                                        <table class="table table-hover" id="DataTable">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Email</th>
+                                                    <th scope="col">Nombre</th>
+                                                    <th scope="col">Foto</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- td table -->
+                                                {% for e in estudiantes%}
+                                                <tr>
+                                                    <td>{{e.email}}</td>
+                                                    <td>{{e.nombre}}</td>
+                                                    <td><img src="{{e.url_img}}" class="img-thumbnail" /></td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--fin espacio para los grupos-->
+
+            <!--espacio para crear grupos-->
+            <div class="col-md-5 grid-margin">
+                <div class="row">
+                    <div class="card w-100 mb-3 ">
                         <div class="card-body">
                             <div class="row">
-                            <h1 class="display-1 col">{{grupo.nombre}}</h1>
-                            <h1 class="display-4 d-flex justify-content-center align-items-center col">Estado: {{grupo.estado}} </h1>
+                                <h4 class="display-3  col d-flex align-items-center"><strong>Temas</strong></h4>
+                                <form class="forms-sample col d-flex justify-content-end align-items-center" method="GET" action="{% url 'seed2:createTema' %}"> 
+                                    {% csrf_token %}
+                                    <input type="hidden" name="codigo_grupo" value="{{grupo.codigo_grupo}}">
+                                    <button class="btn btn-primary">Crear Tema</button>
+                                </form>
                             </div>
-                            <h1 class="display-3">Codigo: {{grupo.codigo_grupo}}</h1>
-                            <h1 class="display-4">Docente: {{grupo.docente}}</h1>                            
-                        </div>
+                            <div class="row">
+                                <ul class="ml-3">
+                                    {% for t in temas%}
+                                        <li class="">{{t}}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>                        
+                        </div>   
                     </div>
-                </div>   
-                <div class="card w-100 mr-3 mb-3">
-                    <div class="col m-3  grid-margin transparent">
+                    <div class="card w-100 mb-3 ">
                         <div class="card-body">
-                            <h1 class="display-1">Estudiantes</h1>
-
-                           
-
-                            <div class="table-responsive">
-                                <table class="table table-hover" id="DataTable">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Email</th>
-                                            <th scope="col">Nombre</th>
-                                            <th scope="col">Foto</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <!-- td table -->
-                                        {% for e in estudiantes%}
-                                        <tr>
-                                            <td>{{e.email}}</td>
-                                            <td>{{e.nombre}}</td>
-                                            <td><img src="{{e.url_img}}" class="img-thumbnail" /></td>
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
+                            <div class="row">
+                                <h4 class="display-3  col d-flex align-items-center"><strong>Actividades</strong></h4>
+                                <form class="forms-sample col d-flex justify-content-end align-items-center" method="GET" action="{% url 'seed2:createActividad' %}"> 
+                                    {% csrf_token %}
+                                    <input type="hidden" name="codigo_grupo" value="{{grupo.codigo_grupo}}">
+                                    <button class="btn btn-primary">Crear Actividad</button>
+                                </form>
                             </div>
-                        </div>
+                            <div class="row">
+                                <ul class="ml-3">
+                                    {% for a in actividades%}
+                                    <li class="">{{a}}</li>
+                                    {% endfor %}  
+                                </ul>
+                            </div>                        
+                        </div>    
                     </div>
+                    
                 </div>
-            </div>
-        </div>
-        <!--fin espacio para los grupos-->
-
-        <!--espacio para crear grupos-->
-        <div class="col-md-5 grid-margin">
-            <div class="row">
-                <div class="card w-100 mb-3 mr-5">
-                    <div class="card-body">
-                    <div class="row">
-                        <h4 class="display-3  col d-flex align-items-center"><strong>Temas</strong></h4>
-                        <form class="forms-sample col d-flex justify-content-end align-items-center" method="GET" action="{% url 'seed2:createTema' %}"> 
-                            {% csrf_token %}
-                            <input type="hidden" name="codigo_grupo" value="{{grupo.codigo_grupo}}">
-                            <button class="btn btn-primary">Crear Tema</button>
-                        </form>
-                    </div>
-                        <div class="row">
-                        <ul class="ml-3">
-                            {% for t in temas%}
-                                <li class="">{{t}}</li>
-                            {% endfor %}
+                <div class="row ">
+                    <div class="card w-100">
+                        <div class="card-body">
+                        <h4 class="card-title">Informacion General</h4>
+                        <ul class="">
+                            <form method="POST">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <input type="submit" value="Update">
+                            </form> 
+                            <li><a href="">item 1</li>
+                            <li><a href="">item 2</li>
+                            <li><a href="">item 3</li>
+                            <li><a href="">item 4</li>
+                            <li><a href="">item 5</li>
+                            <li><a href="">item 6</li>
+                            <li><a href="">item 7</li>
                         </ul>
-
                         </div>
-                        
-                    </div>   
-                </div>
-                <div class="card w-100 mb-3 col-md-5">
-                    <div class="card-body">
-                        <h4 class="card-title">Crear Actividad </h4>
-                        <ul class="m-3">
-                            {% for a in actividades%}
-                            <li class="">{{a}}</li>
-                            {% endfor %}                            
-                        </ul>                        
-                        <p class="card-description">
-                            Crear una nueva actividad
-                        </p>                        
-                        <a href="{% url 'seed2:createActividad' %}" style="text-decoration: none;"><button class="btn btn-primary">Crear Actividad</button></a> 
-                    </div>   
-                </div>
-                
-            </div>
-            <div class="row ">
-                <div class="card w-100">
-                    <div class="card-body">
-                    <h4 class="card-title">Informacion General</h4>
-                    <ul class="">
-                        <li><a href="">item 1</li>
-                        <li><a href="">item 2</li>
-                        <li><a href="">item 3</li>
-                        <li><a href="">item 4</li>
-                        <li><a href="">item 5</li>
-                        <li><a href="">item 6</li>
-                        <li><a href="">item 7</li>
-                    </ul>
                     </div>
                 </div>
-            </div>
 
+            </div>
+            <!--fin espacio para crear grupos-->
+            </div>
         </div>
-        <!--fin espacio para crear grupos-->
-        </div>
-    </div>
     <!-- content-wrapper ends -->
     </div>
-    <form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Update">
-    </form> 
+    
     
 {% endblock %}
 {% block javascripts %}

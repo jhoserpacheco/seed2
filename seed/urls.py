@@ -3,23 +3,28 @@ from django.urls.resolvers import URLPattern
 from django.urls import path, include, re_path
 from .views import *
 from django.views.generic import TemplateView
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import views as auth_views
 
 app_name = 'seed2'
 
 urlpatterns = [
-    path('', HomeView.as_view(), name='home'),
+    path('',logi.as_view(), name='login'),
+    path('logout/',logou.as_view(), name='logout'),
+    path('loging/', loging.as_view(), name='loging'),
+    path('accounts/login/', auth_views.LoginView.as_view()),
     path('profile/', ProfileView.as_view(), name='profile'),
     path('create/', CreateTeacherView.as_view(), name='create'),
     path('list/', ListTeacherView.as_view(), name='list'),
     path('dashboardStudent/', CreateStudentView.as_view(), name='dashboardStudent'),
-    path('dashboardDocente/', DashboardDocenteView.as_view(), name='dashboardDocente'),
+    path('dashboardDocente/',DashboardDocenteView.as_view(), name='dashboardDocente'),
     ## Grupos
     path('dashboardDocente/grupos/create', GrupoCreationView.as_view(), name='createGrupo'),
     path('dashboardDocente/grupos/<codigo_grupo>/', GrupoDetailView.as_view(), name='detailGrupo'),
     path('dashboardDocente/grupos/<pk>/update/', GrupoUpdateView.as_view(), name='updateGrupo'),
     path('dashboardDocente/grupos/<pk>/delete/', GrupoDeleteView.as_view(), name='deleteGrupo'),
 
-    ## Activdad
+    ## Actividad
     path('dashboardDocente/actividad/create', ActividadCreationView.as_view(), name='createActividad'),
     path('dashboardDocente/actividad/<int:codigo>/', ActividadDetailView.as_view(), name='detailActividad'),
     path('dashboardDocente/actividad/<pk>/update/', ActividadUpdateView.as_view(), name='updateActividad'),

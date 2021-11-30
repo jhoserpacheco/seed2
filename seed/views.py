@@ -5,6 +5,9 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import View, UpdateView, DeleteView, ListView, DetailView
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from .forms import StudentCreateForm, TeacherCreateForm, GrupoCreateForm, ActividadCreateForm, TemaCreateForm
 
 """
@@ -29,7 +32,36 @@ from django.views.generic.edit import (
 
 # Create your views here.
 
-class HomeView(View):
+#login de django
+class logou(View): 
+    
+    def get(self, request, *args, **kwargs):
+        context={}
+        print('objeto request.........',request)
+        logout(request)
+        return render(request, 'Cuenta/login.html', context)
+        
+
+class logi(View):
+    def get(self, request, *args, **kwargs):
+        context={}
+        return render(request, 'Cuenta/login.html', context)
+    def post(self, request, *args, **kwargs):
+        if request.method == 'POST':
+            print("objeto post .............",request.POST)
+            username = request.POST['useremail']
+            password = request.POST['userpassword']
+            user = authenticate(username=username, password=password)
+            print("user..........",user)
+            if user is not None:
+                login(request, user)
+                return redirect('seed2:dashboardDocente')
+            else:
+                return redirect('seed2:login')
+
+
+class loging(View):
+    print("loging...................")
     def get(self, request, *args, **kwargs):
         context={
         }
@@ -60,6 +92,7 @@ class ProfileView(View):
 
 
 
+@method_decorator([login_required], name='dispatch')
 class CreateTeacherView(View):
     def get(self, request, *args, **kwargs):
         form = TeacherCreateForm()
@@ -84,6 +117,7 @@ class CreateTeacherView(View):
         }
         return render(request, 'docenteList.html',context)
 
+@method_decorator([login_required], name='dispatch')
 class ListTeacherView(View):
     def get(self, request, *args, **kwargs):
         context = { 
@@ -91,6 +125,7 @@ class ListTeacherView(View):
         }
         return render(request, 'docenteList.html', context)
 
+@method_decorator([login_required], name='dispatch')
 class CreateStudentView(View):
     
     def get(self, request, *args, **kwargs):
@@ -100,7 +135,7 @@ class CreateStudentView(View):
         }
         return render(request, 'profileGoogle.html', context)
 
-
+@method_decorator([login_required], name='dispatch')
 class DashboardDocenteView(View):
     def get(self, request, *args, **kwargs):
         context = { 
@@ -113,6 +148,7 @@ class DashboardDocenteView(View):
 """
 CRUD DE GRUPOS 
 """
+@method_decorator([login_required], name='dispatch')
 class GrupoCreationView(View):
     def get(self, request, *args, **kwargs):
         form = GrupoCreateForm()
@@ -139,6 +175,7 @@ class GrupoCreationView(View):
         }
         return render(request, 'Grupos/dashboard_docente.html',context)
 
+@method_decorator([login_required], name='dispatch')
 class GrupoDetailView(View):
 
     def get(self, request, codigo_grupo, *args, **kwargs):
@@ -156,6 +193,7 @@ class GrupoDetailView(View):
         }
         return render(request, 'Grupos/grupoDetalle.html',context)
 
+@method_decorator([login_required], name='dispatch')
 class GrupoUpdateView(UpdateView):
     model = Grupo
     fields = ['codigo_grupo', 'nombre', 'docente', 'estado']
@@ -163,6 +201,7 @@ class GrupoUpdateView(UpdateView):
     success_url = reverse_lazy('seed2:dashboardDocente')
 
 
+@method_decorator([login_required], name='dispatch')
 class GrupoDeleteView(DeleteView):
     model = Grupo
     template_name = 'Grupos/grupoEliminar.html'
@@ -172,6 +211,7 @@ class GrupoDeleteView(DeleteView):
 CRUD DE ACTIVIDADES
 """
 
+@method_decorator([login_required], name='dispatch')
 class ActividadCreationView(View):
 
     def get(self, request, *args, **kwargs):
@@ -206,6 +246,7 @@ class ActividadCreationView(View):
         }
         return render(request, 'dashboard_docente.html',context)
 
+@method_decorator([login_required], name='dispatch')
 class ActividadDetailView(View):
 
     def get(self, request, codigo, *args, **kwargs):
@@ -215,6 +256,7 @@ class ActividadDetailView(View):
         }
         return render(request, 'Actividad/actividadDetalle.html',context)
 
+@method_decorator([login_required], name='dispatch')
 class ActividadUpdateView(UpdateView):
     model = Actividad
     fields = {'codigo', 'nombre_ac', 'descripcion', 'estructura_de_datos', 'tema_actividad', 'fecha_inicio', 'fecha_fin', 'es_visible'}
@@ -222,7 +264,7 @@ class ActividadUpdateView(UpdateView):
     success_url = reverse_lazy('seed2:dashboardDocente')
 
 
-
+@method_decorator([login_required], name='dispatch')
 class ActividadDeleteView(DeleteView):
     model = Actividad
     template_name = 'Actividad/actividadEliminar.html'
@@ -232,6 +274,7 @@ class ActividadDeleteView(DeleteView):
 """
 CRUD DE TEMAS
 """
+@method_decorator([login_required], name='dispatch')
 class TemaCreationView(View):
     def get(self, request, *args, **kwargs):
         form = TemaCreateForm()
@@ -262,6 +305,7 @@ class TemaCreationView(View):
         }
         return render(request, 'Grupos/dashboard_docente.html',context)
 
+@method_decorator([login_required], name='dispatch')
 class TemaDetailView(View):
 
     def get(self, request, codigo, *args, **kwargs):
@@ -273,6 +317,7 @@ class TemaDetailView(View):
         }
         return render(request, 'Tema/temaDetalle.html', context)
 
+@method_decorator([login_required], name='dispatch')
 class TemaUpdateView(UpdateView):
     model = Tema
     fields = fields = {'codigo_tema', 'nombre_tema', 'grupo_tema'}
@@ -289,11 +334,13 @@ class TemaUpdateView(UpdateView):
         return render(request, 'Tema/temaDetalle.html', context)
 
 
+@method_decorator([login_required], name='dispatch')
 class TemaDeleteView(DeleteView):
     model = Tema
     template_name = 'Tema/temaEliminar.html'
     success_url = reverse_lazy('seed2:dashboardDocente')
 
+@method_decorator([login_required], name='dispatch')
 class TemaActividadView(View):
     def get(self, request, pk,*args, **kwargs):
         actividad = Actividad.objects.filter(tema_actividad=pk)
