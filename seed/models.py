@@ -1,44 +1,12 @@
 
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser,PermissionsMixin,BaseUserManager
+from django.contrib.auth.models import AbstractUser, User
 from django.db.models.fields import DateTimeField
 from django.utils.timezone import now
+from usuarios.models import Estudiante, Docente
 
 
 # Create your models here.
-
-
-class Usuario(models.Model):
-    email = models.EmailField(
-        primary_key=True,
-        null=False, 
-        unique=True,
-        max_length=100
-    )
-    nombre = models.CharField(
-        max_length=50,
-        default="", 
-        blank=True
-    )
-    url_img = models.CharField(
-        max_length=250,
-        default="", 
-        blank=True
-    )
-    es_admin = models.BooleanField(default=False)
-    es_docente = models.BooleanField(default=False)
-    class Meta:
-        abstract = True
-
-    def __str__(self):
-        return self.email
-
-
-
-# Modelo docente, 
-# Contiene un campo para el nombre del email (PK), nombre e imagen url de perfil del docente obtenido de google
-class Docente(Usuario):
-    pass
 
 class Grupo(models.Model):
     codigo_grupo = models.CharField(
@@ -74,17 +42,6 @@ class Grupo(models.Model):
     def __str__(self):
         return self.codigo_grupo
 
-class Estudiante(Usuario):
-   
-    grupo = models.ForeignKey(Grupo, on_delete = models.DO_NOTHING, default="", blank=True, null=True)
-    class Meta:
-        verbose_name = "Estudiante"
-        verbose_name_plural = "Estudiantes"
-        ordering = ['nombre']
-        
-    def __str__(self):
-        return self.email
-
 class Tema(models.Model): 
     codigo_tema = models.IntegerField(primary_key=True, default="")
     nombre_tema = models.CharField(max_length=50, default="")
@@ -101,7 +58,7 @@ class Actividad(models.Model):
     codigo = models.IntegerField(primary_key=True)
     nombre_ac = models.CharField(max_length=50, verbose_name="Nombre de la actividad")
     descripcion = models.TextField(max_length=350)
-    estudiante_actividad = models.ManyToManyField(Estudiante, through="Estudiate_Actividad")
+    estudianteAct = models.ManyToManyField(Estudiante, through="Estudiante_Actividad")
     estructura_de_datos = models.ForeignKey(
         "EstructuraDeDatos", 
         on_delete=models.CASCADE, 
@@ -140,9 +97,9 @@ class Actividad(models.Model):
     def __str__(self):
         return self.nombre_ac
 
-class Estudiate_Actividad(models.Model):
+class Estudiante_Actividad(models.Model):
     estudiante = models.ForeignKey(Estudiante, on_delete = models.CASCADE)
-    actividad = models.ForeignKey(Actividad, on_delete = models.CASCADE)
+    activity = models.ForeignKey(Actividad, on_delete = models.CASCADE)
     class Estado(models.TextChoices): 
         P = 'P', 'PENDIENTE'
         C = 'C', 'CALIFICADA'

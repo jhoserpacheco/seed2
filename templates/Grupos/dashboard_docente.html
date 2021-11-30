@@ -3,6 +3,7 @@
 {% block title %} Dashboard {% endblock %}
 {% load static%}
 {% block content %} 
+<<<<<<< Updated upstream
 <div class="main-panel">
     <div class="content-wrapper">
         <h1>Hello, {{user.email}} Docente!</h1>
@@ -23,43 +24,80 @@
                 </li>
             {% endfor %}
         </ul>
+=======
+{% load socialaccount %}
+>>>>>>> Stashed changes
+
+{% if user.is_authenticated %}
+    <div class="main-panel">
+        <div class="content-wrapper">
+            <h1>Hello, Dashboard Docente!</h1>
+            <h1>YO SOY {{user.email}}</h1>
+            <h1>NOMBRE {{user.first_name}}</h1>
+            <h1> GRUPOS </h1>
+            <p>
+                <a href="{% url "seed2:createGrupo" %}" class="btn btn-primary">Agregar Grupo</a>
+            </p>
+            <ul>
+                {% for g in grupos %}
+                    <li>
+                        <p>{{ g.nombre }}</p>
+                        <p>
+                            <a href="{% url 'seed2:detailGrupo' g.codigo_grupo %}"> Ver</a> |
+                            <a href="{% url 'seed2:updateGrupo' g.codigo_grupo %}"> Actualizar</a> |
+                            <a href="{% url 'seed2:deleteGrupo' g.codigo_grupo  %}"> Eliminar</a>
+                        </p>
+                    </li>
+                {% endfor %}
+            </ul>
 
 
-        <h1> ACTIVIDADES </h1>
-        <p>
-            <a href="{% url "seed2:createActividad" %}" class="btn btn-primary">Agregar Actividad</a>
-        </p>
-        <ul>
-            {% for a in actividades %}
-                <li>
-                    <p>{{ a.nombre_ac }}</p>
-                    <p>
-                        <a href="{% url 'seed2:detailActividad' a.codigo %}"> Ver</a> |
-                        <a href="{% url 'seed2:updateActividad' a.codigo %}"> Actualizar</a> |
-                        <a href="{% url 'seed2:deleteActividad' a.codigo  %}"> Eliminar</a>
-                    </p>
-                </li>
-            {% endfor %}
-        </ul>
+            <h1> ACTIVIDADES </h1>
+            <p>
+                <a href="{% url "seed2:createActividad" %}" class="btn btn-primary">Agregar Actividad</a>
+            </p>
+            <ul>
+                {% for a in actividades %}
+                    <li>
+                        <p>{{ a.nombre_ac }}</p>
+                        <p>
+                            <a href="{% url 'seed2:detailActividad' a.codigo %}"> Ver</a> |
+                            <a href="{% url 'seed2:updateActividad' a.codigo %}"> Actualizar</a> |
+                            <a href="{% url 'seed2:deleteActividad' a.codigo  %}"> Eliminar</a>
+                        </p>
+                    </li>
+                {% endfor %}
+            </ul>
 
-        <h1> TEMA </h1>
-        <p>
-            <a href="{% url "seed2:createTema" %}" class="btn btn-primary">Agregar Tema</a>
-        </p>
-        <ul>
-            {% for t in temas %}
-                <li>
-                    <p>{{ t.nombre_tema }}</p>
-                    <p>
-                        <a href="{% url 'seed2:detailTema' t.codigo_tema %}"> Ver</a> |
-                        <a href="{% url 'seed2:updateTema' t.codigo_tema %}"> Actualizar</a> |
-                        <a href="{% url 'seed2:deleteTema' t.codigo_tema  %}"> Eliminar</a>
-                    </p>
-                </li>
-            {% endfor %}
-        </ul>
+            <h1> TEMA </h1>
+            <p>
+                <a href="{% url "seed2:createTema" %}" class="btn btn-primary">Agregar Tema</a>
+            </p>
+            <ul>
+                {% for t in temas %}
+                    <li>
+                        <p>{{ t.nombre_tema }}</p>
+                        <p>
+                            <a href="{% url 'seed2:detailTema' t.codigo_tema %}"> Ver</a> |
+                            <a href="{% url 'seed2:updateTema' t.codigo_tema %}"> Actualizar</a> |
+                            <a href="{% url 'seed2:deleteTema' t.codigo_tema  %}"> Eliminar</a>
+                        </p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
-</div>
+{% else %}
+    
+    <div class="main-panel">
+        <div class="content-wrapper">
+            <h1>NO HA INICIADO SESION!</h1>
+            <p>
+                <a href="{% url 'seed2:home' %}" class="btn btn-primary">INICIAR SESION</a>
+            </p>
+        </div>
+    </div>
+{% endif %}
 
     {% endblock content %} 
     <!-- Option 1: Bootstrap Bundle with Popper -->

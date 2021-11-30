@@ -4,17 +4,19 @@ from django.forms.widgets import DateTimeInput, Select
 from .models import Estudiante, Docente, Grupo, Actividad, Tema
 
 class TeacherCreateForm(forms.ModelForm):
-    class Meta:
-        model = Docente
-        fields =  ('email', 'nombre', 'url_img')
-        widgets = {'email': forms.HiddenInput(), 'nombre': forms.HiddenInput(), 'url_img': forms.HiddenInput()}
+    pass
+ #   class Meta:
+  #      model = Docente
+   #     fields =  ('email', 'nombre', 'url_img')
+    #    widgets = {'email': forms.HiddenInput(), 'nombre': forms.HiddenInput(), 'url_img': forms.HiddenInput()}
         #initial = {'email': SocialAccount.get_deferred_fields, 'nombre': SocialAccount.get_profile_url, 'url_img': SocialAccount.get_avatar_url}
 
 class StudentCreateForm(forms.ModelForm):
-    class Meta:
-        model = Estudiante
-        fields =  ('email', 'nombre', 'url_img')
-        widgets = {'email': forms.HiddenInput(), 'nombre': forms.HiddenInput(), 'url_img': forms.HiddenInput()}
+    pass
+ #   class Meta:
+  #      model = Estudiante
+   ##     fields =  ('email', 'nombre', 'url_img')
+    #    widgets = {'email': forms.HiddenInput(), 'nombre': forms.HiddenInput(), 'url_img': forms.HiddenInput()}
         #initial = {'email': SocialAccount.get_deferred_fields, 'nombre': SocialAccount.get_profile_url, 'url_img': SocialAccount.get_avatar_url}
 
 class GrupoCreateForm(forms.ModelForm):
