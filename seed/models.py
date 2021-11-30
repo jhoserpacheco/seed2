@@ -3,10 +3,27 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, User
 from django.db.models.fields import DateTimeField
 from django.utils.timezone import now
-from usuarios.models import Estudiante, Docente
 
 
 # Create your models here.
+class Usuario(AbstractUser):
+    url_img = models.CharField(
+        max_length=250,
+        default="", 
+        blank=True
+    )
+    is_estudiante = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.email
+
+
+class Docente(models.Model):
+    user = models.OneToOneField(Usuario,on_delete=models.CASCADE, primary_key=True)
+    es_admin = models.BooleanField(default=False)
+    es_docente = models.BooleanField(default=False)
+    def __str__(self):
+        return '{} {} - {}'.format(self.user.first_name,self.user.last_name, self.user.username)
 
 class Grupo(models.Model):
     codigo_grupo = models.CharField(
@@ -19,10 +36,12 @@ class Grupo(models.Model):
     )
     docente = models.ForeignKey(
         Docente, 
-        on_delete = models.CASCADE
+        on_delete = models.CASCADE,
+        null=True,
+        blank=True
     )
  
-    #temas = models.ForeignKey("Tema", on_delete=models.CASCADE, default="0000")
+    #temas = models.ForeignKey("Tema", on_delete=models.CASCADE, default="0000", null=True, blank=True)
     class Estado(models.TextChoices): 
         AC = 'AC', 'ACTIVO'
         IN = 'IN', 'INACTIVO'
@@ -41,6 +60,17 @@ class Grupo(models.Model):
     
     def __str__(self):
         return self.codigo_grupo
+
+
+class Estudiante(models.Model):
+    user = models.OneToOneField(Usuario, on_delete=models.CASCADE, primary_key=True)
+    grupo = models.ForeignKey(Grupo, on_delete = models.DO_NOTHING, default="", blank=True, null=True)
+    class Meta:
+        verbose_name = "Estudiante"
+        verbose_name_plural = "Estudiantes"
+
+    def __str__(self):
+        return '{} {} - {}'.format(self.user.first_name,self.user.last_name, self.user.username)
 
 class Tema(models.Model): 
     codigo_tema = models.IntegerField(primary_key=True, default="")

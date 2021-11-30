@@ -59,10 +59,7 @@ INSTALLED_APPS = [
 
 ]
 
-AUTH_USER_MODEL = 'usuarios.Usuario'
-LOGIN_URL = 'seed2:login'
-LOGIN_REDIRECT_URL = reverse_lazy('seed2:dashboardDocente')
-LOGOUT_REDIRECT_URL = reverse_lazy('seed2:login')
+AUTH_USER_MODEL = 'seed.Usuario'
 
 # auth modules 
 AUTHENTICATION_BACKENDS = [
