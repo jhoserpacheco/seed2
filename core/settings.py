@@ -14,7 +14,7 @@ from pathlib import Path
 
 import environ
 import os
-
+from django.urls import reverse_lazy
 env = environ.Env()
 environ.Env.read_env()
 
@@ -63,7 +63,9 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 SITE_ID = 2
-LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = 'seed2:login'
+LOGIN_REDIRECT_URL = reverse_lazy('seed2:dashboardDocente')
+LOGOUT_REDIRECT_URL = reverse_lazy('seed2:login')
 
 # Additional configuration settings
 SOCIALACCOUNT_QUERY_EMAIL = True
