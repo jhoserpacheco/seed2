@@ -19,7 +19,7 @@ class Usuario(AbstractUser):
 
 class Estudiante(models.Model):
     user = models.OneToOneField(Usuario,on_delete=models.CASCADE ,primary_key=True)
-    grupo = models.ForeignKey('Grupo', on_delete = models.DO_NOTHING, default="", blank=True, null=True)
+    #grupo = models.ForeignKey('Grupo', on_delete = models.DO_NOTHING, default="", blank=True, null=True)
     class Meta:
         verbose_name = "Estudiante"
         verbose_name_plural = "Estudiantes"
