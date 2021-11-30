@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+from django.urls import reverse_lazy
 
 import environ
 import os
@@ -54,7 +55,14 @@ INSTALLED_APPS = [
 
     # Add the following django apps
     'seed',
+    'usuarios',
+
 ]
+
+AUTH_USER_MODEL = 'usuarios.Usuario'
+LOGIN_URL = 'seed2:login'
+LOGIN_REDIRECT_URL = reverse_lazy('seed2:dashboardDocente')
+LOGOUT_REDIRECT_URL = reverse_lazy('seed2:login')
 
 # auth modules 
 AUTHENTICATION_BACKENDS = [
@@ -68,8 +76,11 @@ LOGIN_REDIRECT_URL = '/'
 # Additional configuration settings
 SOCIALACCOUNT_QUERY_EMAIL = True
 ACCOUNT_LOGOUT_ON_GET= True
-ACCOUNT_UNIQUE_EMAIL = True
-ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True # email is unique
+ACCOUNT_EMAIL_REQUIRED = True # email is required
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory' # La cuenta realmente exista
+ACCOUNT_AUTHENTICATION_METHOD = True
+SOCIALACCOUNT_AUTO_SIGNUP = False 
 
 # enable email scope for
 SOCIALACCOUNT_PROVIDERS = {
@@ -150,7 +161,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-co'
 
 TIME_ZONE = 'America/Bogota'
 
