@@ -40,6 +40,11 @@ class Grupo(models.Model):
         null=True,
         blank=True
     )
+    estudiantes = models.FileField(
+        upload_to='estudiantes/',
+        null=True,
+        blank=True
+    )
  
     #temas = models.ForeignKey("Tema", on_delete=models.CASCADE, default="0000", null=True, blank=True)
     class Estado(models.TextChoices): 

@@ -68,6 +68,9 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 SITE_ID = 2
+# se crea variable para guardar los archivos 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Login and logout views
 LOGIN_URL = 'seed2:login'

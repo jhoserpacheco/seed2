@@ -1,5 +1,6 @@
 from django import forms
 from allauth.socialaccount.models import SocialAccount
+from django.core.files.base import File
 from django.forms.widgets import DateTimeInput, Select
 from .models import Estudiante, Docente, Grupo, Actividad, Tema
 
@@ -22,7 +23,7 @@ class StudentCreateForm(forms.ModelForm):
 class GrupoCreateForm(forms.ModelForm):
     class Meta:
         model = Grupo
-        fields = {'codigo_grupo', 'nombre', 'docente', 'estado'}
+        fields = {'codigo_grupo', 'nombre', 'docente', 'estado', 'estudiantes'}
 
 class ActividadCreateForm(forms.ModelForm):
     fecha_inicio = forms.DateTimeField(widget=forms.DateInput(attrs={'type': 'datetime-local'}))

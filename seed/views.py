@@ -9,6 +9,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from .forms import StudentCreateForm, TeacherCreateForm, GrupoCreateForm, ActividadCreateForm, TemaCreateForm
+#from utils.readcsv import read_cvs_to_list
+from django.core.files.storage import FileSystemStorage
 
 """
 IMPORT MODELS
@@ -156,18 +158,23 @@ class GrupoCreationView(View):
 
     def post(self, request, *args, **kwargs):
         if request.method == 'POST':
-            form = GrupoCreateForm(request.POST)
+            fs = FileSystemStorage()
+            form = GrupoCreateForm(request.POST, request.FILES)
+            file = GrupoCreateForm(request.FILES)
             print(form)
             if form.is_valid():
+                print("valido", request.FILES.getlist('id_estudiantes'), request.FILES.getlist('estudiantes'),request.FILES.getlist('file'),)
+                estudiantes = None
                 codigo_grupo = form.cleaned_data['codigo_grupo']
                 nombre = form.cleaned_data['nombre']
                 docente = form.cleaned_data['docente'] 
                 estado = form.cleaned_data['estado'] 
-                p, created = Grupo.objects.get_or_create(codigo_grupo=codigo_grupo, nombre=nombre, docente=docente, estado=estado)
+                p, created = Grupo.objects.get_or_create(codigo_grupo=codigo_grupo, nombre=nombre, docente=docente, estado=estado, estudiantes=estudiantes)
                 p.save()
                 form.save()
                 return redirect('seed2:createGrupo')
         context={ 
+            
         }
         return render(request, 'Grupos/dashboard_docente.html',context)
 
