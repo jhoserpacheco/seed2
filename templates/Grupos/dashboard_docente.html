@@ -20,11 +20,35 @@
                 <div class="card">
                     <div class="card-body">
                         <p class="card-title">Grupos</p>
-                    </div>  
-
+                    </div> 
+                    <div class="row">
+                        {% for g in grupos %}
+                        <div class="col m-3  grid-margin transparent" >
+                            
+                            <div class="card card-tale" >
+                                <div class="card-body">
+                                    <div class="row">
+                                        <p class="mb-4 col" >{{g.codigo_grupo}}</p>
+                                        <div class="col">
+                                            <div class="d-flex justify-content-end align-items-start">                                            
+                                                <button type="button" onclick="location.href='{% url 'seed2:deleteGrupo' g.codigo_grupo  %}'" class="btn btn-primary btn-rounded btn-icon ">
+                                                    <i class="ti-trash"></i>
+                                                </button>                                   
+                                            </div>                                                                        
+                                        </div>
+                                    </div>
+                                    <a href="{% url 'seed2:detailGrupo' g.codigo_grupo %}" style="text-decoration: none !important; color: white">
+                                        <p class="fs-30 mb-2">{{g.nombre}}</p>
+                                        <p>{{g.docente}}</p>
+                                    <a/>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        {% endfor %}
+                    </div> 
                 </div>
             </div>
-
         </div>
         <h1>Hello, Dashboard Docente!</h1>
         <h1>YO SOY {{user.email}}</h1>
