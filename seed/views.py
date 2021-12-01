@@ -182,7 +182,7 @@ class GrupoDetailView(View):
         )
         context = { 
             'grupo':grupo,
-            'estudiantes': grupo.estudiante_ser.values().all(),
+            'estudiantes': grupo.estudiante_set.values().all(),
             'temas': tema,
             'actividades': actividad
 
