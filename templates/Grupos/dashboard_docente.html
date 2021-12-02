@@ -10,7 +10,7 @@
             <div class="col-md-12 grid-margin">
                 <div class="row">
                     <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                        <h3 class="font-weight-bold">Welcome {{user.first_name}}</h3>                        
+                        <h4 class="font-weight-bold">Welcome {{user.first_name}}</h4>                        
                     </div>
                 </div>
             </div>
@@ -19,7 +19,9 @@
             <div class="col-md-12 grid-margin">
                 <div class="card">
                     <div class="card-body">
-                        <p class="card-title">Grupos</p>
+                        <a href="{% url "seed2:createGrupo"%}">
+                            <h3 class="">Grupos</h3>
+                        </a>
                     </div> 
                     <div class="row">
                         {% for g in grupos %}
@@ -31,9 +33,12 @@
                                         <p class="mb-4 col" >{{g.codigo_grupo}}</p>
                                         <div class="col">
                                             <div class="d-flex justify-content-end align-items-start">                                            
-                                                <button type="button" onclick="location.href='{% url 'seed2:deleteGrupo' g.codigo_grupo  %}'" class="btn btn-primary btn-rounded btn-icon ">
+                                                <button type="button" onclick="warningDeleteGrupo(nombre='{{g.nombre}}')" class="ml-3 btn btn-primary btn-rounded btn-icon ">
+                                                    <i class="ti-pencil"></i>
+                                                </button>     
+                                                <button type="button" onclick="location.href='{% url 'seed2:deleteGrupo' g.codigo_grupo  %}'" class="ml-3 btn btn-primary btn-rounded btn-icon ">
                                                     <i class="ti-trash"></i>
-                                                </button>                                   
+                                                </button>                                
                                             </div>                                                                        
                                         </div>
                                     </div>
@@ -120,5 +125,6 @@
         <!-- Custom js for this page-->
         <script src="{%static 'js/dashboard.js'%}"></script>
         <script src="{%static 'js/Chart.roundedBarCharts.js'%}"></script>
+        <script src="{%static 'js/sweetAlert.js'%}"></script>
         <!-- End custom js for this page-->
     {% endblock javascripts %} 
