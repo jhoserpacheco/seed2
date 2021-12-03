@@ -1,4 +1,4 @@
-async function warningDeleteGrupo(nombre){
+async function warningDeleteGrupo(nombre,pk){
 
     console.log("warningDeleteGrupo");
 
@@ -9,12 +9,25 @@ async function warningDeleteGrupo(nombre){
         showCancelButton: true,
         showConfirmButton: true,
         confirmButtonText: `Eliminar`,
-        
+        confirmButtonColor: 'red',
         
     }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
-        if (result.isConfirmed) {
-          Swal.fire('Eliminado!', '', 'success')
+        if (result.isConfirmed) 
+        { 
+            var request = $.ajax({
+                type: "GET",
+                url: "eliminar_identificador/",
+                data: {
+                    csrfmiddlewaretoken: '{% csrf_token %}',
+                    "identificador_id": pk                    
+                },
+            });
+            request.done(function(response) {
+                Swal.fire('Eliminado!', '', 'success')
+                window.location.href = "../dashboardDocente/"
+            });
+            
         }
-      })
+    })
 };

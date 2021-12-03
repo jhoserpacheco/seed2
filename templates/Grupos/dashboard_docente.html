@@ -33,7 +33,7 @@
                                         <p class="mb-4 col" >{{g.codigo_grupo}}</p>
                                         <div class="col">
                                             <div class="d-flex justify-content-end align-items-start">                                            
-                                                <button type="button" onclick="warningDeleteGrupo(nombre='{{g.nombre}}')" class="ml-3 btn btn-primary btn-rounded btn-icon ">
+                                                <button type="button" onclick="warningDeleteGrupo(nombre='{{g.nombre}}',pk='{{g.codigo_grupo}}')" class="ml-3 btn btn-primary btn-rounded btn-icon ">
                                                     <i class="ti-pencil"></i>
                                                 </button>     
                                                 <button type="button" onclick="location.href='{% url 'seed2:deleteGrupo' g.codigo_grupo  %}'" class="ml-3 btn btn-primary btn-rounded btn-icon ">

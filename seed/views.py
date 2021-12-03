@@ -207,6 +207,8 @@ class GrupoUpdateView(UpdateView):
 @method_decorator([login_required], name='dispatch')
 class GrupoDeleteView(DeleteView):
     model = Grupo
+   
+    
     template_name = 'Grupos/grupoEliminar.html'
     success_url = reverse_lazy('seed2:dashboardDocente')
 
