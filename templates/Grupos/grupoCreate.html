@@ -22,7 +22,7 @@
             <!--espacio para los grupos-->
             <div class="col-md-7 grid-margin stretch-card">
               <div class="card">
-              
+                Email del usuario {{soy}}
                 <div class="row" >
                   {% for g in grupos %}
                     <div class="col m-3  grid-margin transparent" >
@@ -49,7 +49,7 @@
                     <div class="card w-100 mb-3">
                       <div class="card-body">
                         <h4 class="card-title">Crear Grupos </h4>
-                        <form class="forms-sample" method='POST' >
+                        <form class="forms-sample" method='POST' enctype = 'multipart/form-data'>
                         {% csrf_token %} 
                         {{form.hidden}}
                           <div class="form-group">
@@ -85,8 +85,8 @@
                           -->           
                           <div class="form-group">
                             <label >Archivo estudiantes</label>
-                              {{form.estudiantes}}
-                          </div>     
+                            {{form.estudiantes}}   
+                          </div> 
                           <button type="submit" class="btn btn-primary mr-2">Submit</button>
                           
                         </form>
