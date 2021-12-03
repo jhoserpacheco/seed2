@@ -27,7 +27,7 @@
                             <div class="card-body">
                                 <div class="row">
                                 <h1 class="display-1 col">{{grupo.nombre}}</h1>
-                                <h1 class="display-4 d-flex justify-content-center align-items-center col">Estado: {{grupo.estado}} </h1>
+                                <h1 class="display-4 d-flex justify-content-center align-items-center col">Estado: {{grupo.get_estado_display}} </h1>
                                 </div>
                                 <h1 class="display-3">Codigo: {{grupo.codigo_grupo}}</h1>
                                 <h1 class="display-4">Docente: {{grupo.docente}}</h1>                            
@@ -52,9 +52,9 @@
                                                 <!-- td table -->
                                                 {% for e in estudiantes%}
                                                 <tr>
-                                                    <td>{{e.email}}</td>
-                                                    <td>{{e.nombre}}</td>
-                                                    <td><img src="{{e.url_img}}" class="img-thumbnail" /></td>
+                                                    <td>{{e.user.email}}</td>
+                                                    <td>{{e.user.first_name}} {{e.user.last_name}}</td>
+                                                    <td><img src="{{e.user.url_img}}" class="img-thumbnail" /></td>
                                                 </tr>
                                                 {% endfor %}
                                             </tbody>

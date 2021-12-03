@@ -1,9 +1,11 @@
 from django.core.mail import BadHeaderError, send_mail
 from django.http import HttpResponse, HttpResponseRedirect
 import csv 
+from django.conf import settings
+from django.conf.urls.static import static
 
 """
-Reads a csv file and returns a list of lists.
+Reads a csv file and returns a list 
 """
 def read_cvs_to_list(file_name):
 
@@ -12,5 +14,5 @@ def read_cvs_to_list(file_name):
         listEstudiantes = list(reader)
     return listEstudiantes
 
-print(read_cvs_to_list('../media/emails.csv'))
+
 

@@ -1,16 +1,17 @@
-from django.db.models.expressions import Subquery
-from datetime import datetime, timedelta
-from django.http.response import HttpResponse
-from django.shortcuts import render
-from django.shortcuts import get_object_or_404, redirect, render
-from django.urls import reverse_lazy
-from django.views.generic import View, UpdateView, DeleteView, ListView, DetailView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.db.models.expressions import Subquery
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse_lazy
+from django.views.generic import View, UpdateView, DeleteView
 from django.utils.decorators import method_decorator
+
+from utils.readcsv import read_cvs_to_list
+
+"""
+IMPORT FORMS
+"""
 from .forms import StudentCreateForm, TeacherCreateForm, GrupoCreateForm, ActividadCreateForm, TemaCreateForm
-#from utils.readcsv import read_cvs_to_list
-from django.core.files.storage import FileSystemStorage
 
 """
 IMPORT MODELS
@@ -20,7 +21,8 @@ from .models import (
     Estudiante,
     Grupo,
     Actividad, 
-    Tema
+    Tema,
+    Usuario
 )
 
 
@@ -151,25 +153,24 @@ class GrupoCreationView(View):
     def get(self, request, *args, **kwargs):
         form = GrupoCreateForm()
         context = { 
-            'grupos': Grupo.objects.all(),
+            'grupos': Grupo.objects.filter(docente=request.user.id).all(),
+            'soy':request.user.email,
             'form':form 
         }
         return render(request, 'Grupos/grupoCreate.html', context)
 
     def post(self, request, *args, **kwargs):
         if request.method == 'POST':
-            fs = FileSystemStorage()
             form = GrupoCreateForm(request.POST, request.FILES)
-            file = GrupoCreateForm(request.FILES)
             print(form)
             if form.is_valid():
-                print("valido", request.FILES.getlist('id_estudiantes'), request.FILES.getlist('estudiantes'),request.FILES.getlist('file'),)
-                estudiantes = None
+                estudiantes = form.cleaned_data['estudiantes']
                 codigo_grupo = form.cleaned_data['codigo_grupo']
                 nombre = form.cleaned_data['nombre']
                 docente = form.cleaned_data['docente'] 
                 estado = form.cleaned_data['estado'] 
                 p, created = Grupo.objects.get_or_create(codigo_grupo=codigo_grupo, nombre=nombre, docente=docente, estado=estado, estudiantes=estudiantes)
+                GrupoCreationView.setUserToStudent(p)
                 p.save()
                 form.save()
                 return redirect('seed2:createGrupo')
@@ -177,6 +178,29 @@ class GrupoCreationView(View):
             
         }
         return render(request, 'Grupos/dashboard_docente.html',context)
+
+    """
+        METODO PARA ASIGNAR UN ESTUDIANTE A UN GRUPO 
+    """
+    def setUserToStudent(grupo):
+        rutaCSV =  'media/' + grupo.estudiantes.name
+        print('ruta',rutaCSV)
+        correos = read_cvs_to_list(rutaCSV)
+        for estudiante in correos:
+            print(estudiante[0])
+            student = Estudiante()
+            email = str(estudiante[0])
+            try:
+                user = Usuario.objects.get(email=email)
+                student.user = user
+                student.grupo = Grupo.objects.get(codigo_grupo=grupo.codigo_grupo)
+                user.is_estudiante = True
+                user.save()
+                student.save()
+            except: 
+                pass
+                
+
 
 @method_decorator([login_required], name='dispatch')
 class GrupoDetailView(View):
@@ -189,7 +213,7 @@ class GrupoDetailView(View):
         )
         context = { 
             'grupo':grupo,
-            'estudiantes': grupo.estudiante_set.values().all(),
+            'estudiantes': grupo.estudiante_set.all(),
             'temas': tema,
             'actividades': actividad
 
