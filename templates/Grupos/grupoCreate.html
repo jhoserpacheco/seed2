@@ -21,9 +21,7 @@
           <div class="row">
             <!--espacio para los grupos-->
             <div class="col-md-7 grid-margin stretch-card">
-              <div class="card">
-                Email del usuario {{soy}} <br/>
-                {{se}}
+              <div class="card">               
                 <div class="row" >
                   {% for g in grupos %}
                         <div class="col m-3  grid-margin transparent" >
@@ -64,7 +62,7 @@
                         {{form.hidden}}
                           <div class="form-group">
                             <label for="codigo_grupo">Codigo</label>
-                            <input type="text" class="form-control" id="codigo_grupo" name="codigo_grupo" placeholder="Codigo Grupo">
+                            <input type="number" class="form-control" id="codigo_grupo" name="codigo_grupo" placeholder="Codigo Grupo">
                           </div>
 
                           <div class="form-group">

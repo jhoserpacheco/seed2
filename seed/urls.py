@@ -5,7 +5,7 @@ from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import views as auth_views
 from .views import *
-from .ajax import eliminar_identificador
+from .ajax import *
 
 app_name = 'seed2'
 
@@ -25,7 +25,9 @@ urlpatterns = [
     path('dashboardDocente/grupos/<codigo_grupo>/', GrupoDetailView.as_view(), name='detailGrupo'),
     path('dashboardDocente/grupos/<pk>/update/', GrupoUpdateView.as_view(), name='updateGrupo'),
     path('dashboardDocente/grupos/<pk>/delete/', GrupoDeleteView.as_view(), name='deleteGrupo'),
-    url(r'eliminar_identificador/$', eliminar_identificador, name='eliminar_identificador'),#url de ajax para eliminar identificador(grupo)
+    url(r'eliminar_grupo/$', eliminar_grupo, name='eliminar_grupo'),#url de ajax para eliminar identificador(grupo)
+    url(r'eliminar_tema/$', eliminar_tema, name='eliminar_tema'),#url de ajax para eliminar identificador(tema)
+    url(r'eliminar_actividad/$', eliminar_actividad, name='eliminar_actividad'),#url de ajax para eliminar identificador(actividad)
 
     ## Actividad
     path('dashboardDocente/actividad/create', ActividadCreationView.as_view(), name='createActividad'),

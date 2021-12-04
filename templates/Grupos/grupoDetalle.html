@@ -26,17 +26,14 @@
                         <div class="col m-3  grid-margin transparent">
                             <div class="card-body">
                                 <div class="row">
-                                <h1 class="display-1 col-9">{{grupo.nombre}}</h1>
-                                <div class="col-3">
-                                    <div class="d-flex justify-content-center align-items-start">                                            
-                                        <button type="button" onclick="warningDeleteGrupo(nombre='{{grupo.nombre}}',pk='{{grupo.codigo_grupo}}',padre='1')" class="ml-3 btn btn-inverse-primary ">
-                                           Eliminar
-                                        </button> 
-                                    </div> 
-                                    
-                                </div>
-
-                                
+                                    <h1 class="display-1 col-9">{{grupo.nombre}}</h1>
+                                    <div class="col-3">
+                                        <div class="d-flex justify-content-center align-items-start">                                            
+                                            <button type="button" onclick="warningDeleteGrupo(nombre='{{grupo.nombre}}',pk='{{grupo.codigo_grupo}}',padre='1')" class="ml-3 btn btn-inverse-primary ">
+                                            Eliminar
+                                            </button> 
+                                        </div> 
+                                    </div>                                
                                 </div>
                                 <h1 class="display-3">Codigo: {{grupo.codigo_grupo}}</h1>
                                 <h1 class="display-4">Docente: {{grupo.docente}}</h1>                            

@@ -43,47 +43,82 @@
                                         <p>{{g.docente}}</p>
                                     <a/>
                                 </div>
-                            </div>
-                            
+                            </div>                            
                         </div>
                         {% endfor %}
                     </div> 
                 </div>
             </div>
         </div>
-        <h1> ACTIVIDADES </h1>
-        <p>
-            <a href="{% url "seed2:createActividad" %}" class="btn btn-primary">Agregar Actividad</a>
-        </p>
-        <ul>
-            {% for a in actividades %}
-                <li>
-                    <p>{{ a.nombre_ac }}</p>
-                    <p>
-                        <a href="{% url 'seed2:detailActividad' a.codigo %}"> Ver</a> |
-                        <a href="{% url 'seed2:updateActividad' a.codigo %}"> Actualizar</a> |
-                        <a href="{% url 'seed2:deleteActividad' a.codigo  %}"> Eliminar</a>
-                    </p>
-                </li>
-            {% endfor %}
-        </ul>
 
-        <h1> TEMA </h1>
-        <p>
-            <a href="{% url "seed2:createTema" %}" class="btn btn-primary">Agregar Tema</a>
-        </p>
-        <ul>
-            {% for t in temas %}
-                <li>
-                    <p>{{ t.nombre_tema }}</p>
-                    <p>
-                        <a href="{% url 'seed2:detailTema' t.codigo_tema %}"> Ver</a> |
-                        <a href="{% url 'seed2:updateTema' t.codigo_tema %}"> Actualizar</a> |
-                        <a href="{% url 'seed2:deleteTema' t.codigo_tema  %}"> Eliminar</a>
-                    </p>
-                </li>
-            {% endfor %}
-        </ul>
+        <div class="row">
+            <div class="col-md-12 grid-margin">
+                <div class="card">
+                    <div class="card-body">
+                        <a href="{% url "seed2:createTema"%}">
+                            <h3 class="">Temas</h3>
+                        </a>
+                    </div> 
+                    <div class="row">
+                        {% for t in temas %}
+                        <div class="col m-3  grid-margin transparent" >
+                            <div class="card card-tale" >
+                                <div class="card-body">
+                                    <div class="row">
+                                        <p class="mb-4 col" >{{t.codigo_tema}}</p>
+                                        <div class="col">
+                                            <div class="d-flex justify-content-end align-items-start">                                            
+                                                <button type="button" onclick="warningDeleteTema(nombre='{{t.nombre_tema}}',pk='{{t.codigo_tema}}')" class="ml-3 btn btn-primary btn-rounded btn-icon ">
+                                                    <i class="ti-trash"></i>
+                                                </button>                               
+                                            </div>                                                                        
+                                        </div>
+                                    </div>
+                                    <a href="{% url 'seed2:detailTema' t.codigo_tema %}" style="text-decoration: none !important; color: white">
+                                        <p class="fs-30 mb-2">{{t.nombre_tema}}</p>                                       
+                                    <a/>
+                                </div>
+                            </div>                            
+                        </div>
+                        {% endfor %}
+                    </div> 
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 grid-margin">
+                <div class="card">
+                    <div class="card-body">
+                        <a href="{% url "seed2:createActividad"%}">
+                            <h3 class="">Actividades</h3>
+                        </a>
+                    </div> 
+                    <div class="row">
+                        {% for a in actividades %}
+                        <div class="col m-3  grid-margin transparent" >
+                            <div class="card card-tale" >
+                                <div class="card-body">
+                                    <div class="row">
+                                        <p class="mb-4 col" >{{a.codigo}}</p>
+                                        <div class="col">
+                                            <div class="d-flex justify-content-end align-items-start">                                            
+                                                <button type="button" onclick="warningDeleteActividad(nombre='{{a.nombre_ac}}',pk='{{a.codigo}}')" class="ml-3 btn btn-primary btn-rounded btn-icon ">
+                                                    <i class="ti-trash"></i>
+                                                </button>                               
+                                            </div>                                                                        
+                                        </div>
+                                    </div>
+                                    <a href="{% url 'seed2:detailActividad' a.codigo %}" style="text-decoration: none !important; color: white">
+                                        <p class="fs-30 mb-2">{{a.nombre_ac}}</p>                                       
+                                    <a/>
+                                </div>
+                            </div>                            
+                        </div>
+                        {% endfor %}
+                    </div> 
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
