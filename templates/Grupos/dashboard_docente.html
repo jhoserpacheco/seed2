@@ -43,8 +43,42 @@
                                         <p>{{g.docente}}</p>
                                     <a/>
                                 </div>
-                            </div>
-                            
+                            </div>                            
+                        </div>
+                        {% endfor %}
+                    </div> 
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 grid-margin">
+                <div class="card">
+                    <div class="card-body">
+                        <a href="{% url "seed2:createTema"%}">
+                            <h3 class="">Temas</h3>
+                        </a>
+                    </div> 
+                    <div class="row">
+                        {% for t in temas %}
+                        <div class="col m-3  grid-margin transparent" >
+                            <div class="card card-tale" >
+                                <div class="card-body">
+                                    <div class="row">
+                                        <p class="mb-4 col" >{{t.codigo_tema}}</p>
+                                        <div class="col">
+                                            <div class="d-flex justify-content-end align-items-start">                                            
+                                                <button type="button" onclick="warningDeleteTema(nombre='{{t.nombre_tema}}',pk='{{t.codigo_tema}}')" class="ml-3 btn btn-primary btn-rounded btn-icon ">
+                                                    <i class="ti-trash"></i>
+                                                </button>                               
+                                            </div>                                                                        
+                                        </div>
+                                    </div>
+                                    <a href="{% url 'seed2:detailTema' t.codigo_tema %}" style="text-decoration: none !important; color: white">
+                                        <p class="fs-30 mb-2">{{t.nombre_tema}}</p>                                       
+                                    <a/>
+                                </div>
+                            </div>                            
                         </div>
                         {% endfor %}
                     </div> 

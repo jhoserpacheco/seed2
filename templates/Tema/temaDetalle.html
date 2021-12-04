@@ -8,19 +8,33 @@
 
 <div class="main-panel">
     <div class="content-wrapper">
-
+        <div class="row">
+            <div class="col-md-12 grid-margin">
+              <div class="row">
+                <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                  <h3 class="font-weight-bold">Bienvenido</h3>
+                  <h6 class="font-weight-normal mb-0">Administrar Grupos </h6>
+                </div>
+              </div>
+            </div>
+          </div>
         <div class="row">
             <!--espacio para las actividades-->
             <div class="col-md-7 grid-margin">
-                <div class="card">
+                <div class="card w-100 mr-3 mb-3">
                     <div class="card-body">
-                        <h4 class="card-title">Temas</h4>
-                        <!--Actividades-->
-                            <h1>Hello, Tema Detalle!</h1>
-                            <h3>codigo_tema: {{tema.codigo_tema}}</h3>   
-                            <h3>nombre_tema: {{tema.nombre_tema}}</h3>   
-                            <h3>grupo_tema: {{tema.grupo_tema}}</h3>    
-                        <!--fin actividades-->
+                        <div class="row">
+                            <h1 class="display-1 col-9">{{tema.nombre_tema}}</h1>
+                            <div class="col-3">
+                                <div class="d-flex justify-content-center align-items-start">                                            
+                                    <button type="button" onclick="warningDeleteTema(nombre='{{tema.nombre_tema}}',pk='{{tema.codigo_tema}}',padre='1')" class="ml-3 btn btn-inverse-primary ">
+                                    Eliminar
+                                    </button> 
+                                </div> 
+                            </div>                                
+                        </div>
+                        <h1 class="display-3">Grupo: {{tema.grupo_tema}}</h1>
+                        <h1 class="display-4">Codigo Tema: {{tema.codigo_tema}}</h1>
                     </div>
                 </div>
                 <div class="card mt-3">
@@ -104,5 +118,6 @@
     <!-- Custom js for this page-->
     <script src="{%static 'js/dashboard.js'%}"></script>
     <script src="{%static 'js/Chart.roundedBarCharts.js'%}"></script>
+    <script src="{%static 'js/sweetAlert.js'%}"></script>
     <!-- End custom js for this page-->
 {% endblock javascripts %} 
