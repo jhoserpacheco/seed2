@@ -1,16 +1,15 @@
 from django import forms
 from allauth.socialaccount.models import SocialAccount
 from django.core.files.base import File
+from django.db.models import fields
 from django.forms.widgets import DateTimeInput, Select
-from .models import Estudiante, Docente, Grupo, Actividad, Tema
+from .models import Estudiante, Docente, Grupo, Actividad, Tema, Estudiante_Actividad
 
 class TeacherCreateForm(forms.ModelForm):
-    pass
- #   class Meta:
-  #      model = Docente
-   #     fields =  ('email', 'nombre', 'url_img')
-    #    widgets = {'email': forms.HiddenInput(), 'nombre': forms.HiddenInput(), 'url_img': forms.HiddenInput()}
-        #initial = {'email': SocialAccount.get_deferred_fields, 'nombre': SocialAccount.get_profile_url, 'url_img': SocialAccount.get_avatar_url}
+    is_docente = forms.BooleanField(widget=forms.RadioSelect(choices=((True, 'Si'), (False, 'No'))))
+    class Meta:
+        model = Docente
+        fields = '__all__'
 
 class StudentCreateForm(forms.ModelForm):
     pass
@@ -46,6 +45,13 @@ class TemaCreateForm(forms.ModelForm):
     class Meta:
         model = Tema
         fields = {'codigo_tema', 'nombre_tema', 'grupo_tema'}
+
+class ActividadEstudianteForm(forms.ModelForm):
+    class Meta:
+        model = Estudiante_Actividad
+        fields = {'estudiante', 'activity', 'estado', 'nota', 'comentario', 'fecha_entrega'}
+        format = {'fecha_entrega': DateTimeInput(attrs={'type': 'datetime-local', 'timezone': 'America/Bogota'},),}
+        
         
 
 

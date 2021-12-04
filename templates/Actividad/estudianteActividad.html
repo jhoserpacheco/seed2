@@ -1,0 +1,77 @@
+{% extends "layouts/base-fullscreen.html" %}
+{% load static%}
+{% block title %} Dashboard {% endblock %}
+{% load static%}
+{% block stylesheets %}
+
+{%endblock%} 
+{% block content %} 
+    <div class="main-panel">
+        <div class="content-wrapper">
+            <div class="row">
+                <div class="col-md-12 grid-margin">
+                    <div class="row">
+                        <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                            <h3 class="font-weight-bold">Bienvenido</h3>
+                            <h6 class="font-weight-normal mb-0">Detalles Grupo </h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+            <!--espacio para los grupos-->
+                <div class="col-md-12 grid-margin stretch-card">    
+                        <div class="card w-100 mr-3 mb-3">
+                            <div class="col m-3  grid-margin transparent">
+                                <div class="card-body">
+                                    <form class="forms-sample" method="POST">
+                                        {% csrf_token%}
+                                        
+                                        <div class="form-group col">
+                                            <label for="exampleTextarea1">Actividad</label>
+                                            {{request.actividad}}
+                                            {{actividad}}
+                                            {{soy}}
+                                            <input class="form-control"  id="activity" value="{{actividad.codigo}}" name="activity" type="text" disabled>
+                                        </div>
+                                        <div class="form-group col">
+                                            <label for="exampleTextarea1">Fecha Entrega</label>
+                                            {{actividad.timeleft}}
+                                            {{fecha_entrega.default}}
+                                            {{now}}
+                                            <input class="form-control"  id="fecha_entrega" value="{{now}}" name="fecha_entrega" type="datetime-local">
+                                        </div>
+                                        <div class="form-group col">
+                                            <input class="form-control"  id="estudiante" name="estudiante" value="{{user.get_estudiante}}" type="hidden" >
+                                        </div>
+                                        <div class="form-group col">
+                                            <label for="exampleTextarea1">Comentario</label>
+                                            <input class="form-control"  id="comentario" name="comentario" type="text">
+                                        </div>
+                                        <div class="form-group col">
+                                            <label for="exampleTextarea1">Estado</label>
+                                            <input class="form-control"  id="estado" name="estado" type="text">
+                                        </div>
+                                        <div class="form-group col">
+                                            <label for="exampleTextarea1">Nota</label>
+                                            <input class="form-control"  id="nota" name="nota" type="number" min="0">
+                                        </div>
+                                        <button type="submit" class="btn btn-block btn-primary mr-2">Submit</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    <!-- content-wrapper ends -->
+    </div>
+    
+    
+{% endblock %}
+{% block javascripts %}
+<!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="{%static 'js/sweetAlert.js'%}"></script>
+    <!-- Scripts personalizados-->
+{% endblock javascripts %}

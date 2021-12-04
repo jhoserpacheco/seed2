@@ -17,8 +17,9 @@ urlpatterns = [
     path('profile/', ProfileView.as_view(), name='profile'),
     path('create/', CreateTeacherView.as_view(), name='create'),
     path('list/', ListTeacherView.as_view(), name='list'),
-    path('dashboardStudent/', CreateStudentView.as_view(), name='dashboardStudent'),
+    path('dashboardStudent/', DashboardStudentView.as_view(), name='dashboardStudent'),
     path('dashboardDocente/',DashboardDocenteView.as_view(), name='dashboardDocente'),
+    path('dashboardStudent/actividad/<pk>', SubirActividadEstudianteView.as_view(), name='uploadActividad'),
     ## Grupos
     path('dashboardDocente/grupos/create', GrupoCreationView.as_view(), name='createGrupo'),
     path('dashboardDocente/grupos/<codigo_grupo>/', GrupoDetailView.as_view(), name='detailGrupo'),

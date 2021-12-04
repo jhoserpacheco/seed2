@@ -13,6 +13,21 @@ class Usuario(AbstractUser):
         blank=True
     )
     is_estudiante = models.BooleanField(default=False)
+    is_admin = models.BooleanField(default=False)
+    is_docente = models.BooleanField(default=False)
+
+    def get_estudiante(self):
+        rol_estudiante = None
+        if hasattr(self, 'estudiante'):
+            rol_estudiante = self.estudiante
+        return rol_estudiante
+
+    def get_docente(self):
+        rol_docente = None
+        if hasattr(self, 'docente'):
+            rol_docente = self.docente
+        return rol_docente
+
 
     def __str__(self):
         return self.email
@@ -20,8 +35,6 @@ class Usuario(AbstractUser):
 
 class Docente(models.Model):
     user = models.OneToOneField(Usuario,on_delete=models.CASCADE, primary_key=True)
-    es_admin = models.BooleanField(default=False)
-    es_docente = models.BooleanField(default=False)
     def __str__(self):
         return '{} {} - {}'.format(self.user.first_name,self.user.last_name, self.user.username)
 
@@ -123,6 +136,9 @@ class Actividad(models.Model):
 
     def getFechaFin(self):
         return self.fecha_fin.strftime("%Y-%m-%d %I:%M:%S")
+    
+    def getNow(self):
+        return now().strftime("%Y-%m-%d %I:%M:%S")
 
     class Meta:
         verbose_name = "Actividad"
@@ -154,6 +170,9 @@ class Estudiante_Actividad(models.Model):
 
     def __str__(self):
         return str(self.actividad) +' - '+ str(self.estudiante) 
+
+    def getNow(self):
+        return now().strftime("%Y-%m-%d %I:%M:%S")
 
 class EstructuraDeDatos(models.Model):
     codigo_ed = models.IntegerField(primary_key=True)

@@ -5,13 +5,14 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import View, UpdateView, DeleteView
 from django.utils.decorators import method_decorator
+from seed.decorators import docente_required, estudiante_required
 
 from utils.readcsv import read_cvs_to_list
 
 """
 IMPORT FORMS
 """
-from .forms import StudentCreateForm, TeacherCreateForm, GrupoCreateForm, ActividadCreateForm, TemaCreateForm
+from .forms import StudentCreateForm, TeacherCreateForm, GrupoCreateForm, ActividadCreateForm, TemaCreateForm, ActividadEstudianteForm
 
 """
 IMPORT MODELS
@@ -22,7 +23,8 @@ from .models import (
     Grupo,
     Actividad, 
     Tema,
-    Usuario
+    Usuario, 
+    Estudiante_Actividad
 )
 
 
@@ -106,10 +108,8 @@ class CreateTeacherView(View):
             form = TeacherCreateForm(request.POST)
             print(form)
             if form.is_valid():
-                email = form.cleaned_data['email']
-                nombre = form.cleaned_data['nombre']
-                url_img = form.cleaned_data['url_img'] 
-                p, created = Docente.objects.get_or_create(email=email, nombre=nombre, url_img=url_img)
+                user = form.cleaned_data['user']
+                p, created = Docente.objects.get_or_create(user=user)
                 p.save()
                 form.save()
                 return redirect('seed2:create')
@@ -135,7 +135,7 @@ class CreateStudentView(View):
         }
         return render(request, 'profileGoogle.html', context)
 
-@method_decorator([login_required], name='dispatch')
+@method_decorator([login_required, docente_required], name='dispatch')
 class DashboardDocenteView(View):
     def get(self, request, *args, **kwargs):
         context = { 
@@ -144,17 +144,69 @@ class DashboardDocenteView(View):
             'temas': Tema.objects.all()
         }
         return render(request, 'Grupos/dashboard_docente.html', context)
+@method_decorator([login_required, estudiante_required], name='dispatch')
+class DashboardStudentView(View):
+    def get(self, request, *args, **kwargs):
+        grupos = Grupo.objects.filter(codigo_grupo=request.user.get_estudiante().grupo.codigo_grupo).all()
+        tema = Tema.objects.filter(grupo_tema=request.user.get_estudiante().grupo.codigo_grupo)
+        actividad = Actividad.objects.filter(tema_actividad=Subquery(tema.values('codigo_tema')))
+        context = { 
+            'grupos': grupos,
+            'temas': tema, 
+            'actividades': actividad
+        }
+        return render(request, 'Grupos/dashboard_estudiante.html', context)
+
+"""
+Estudiante subir actividad
+"""
+class SubirActividadEstudianteView(View):
+    def get(self, request, pk,*args, **kwargs):
+        form = ActividadEstudianteForm()
+        actividad = Actividad.objects.filter(codigo=pk).first()
+        context = { 
+            'soy':request.user,
+            'actividad': actividad,
+            'now': actividad.getNow(),
+            'form':form 
+        }
+        return render(request, 'Actividad/estudianteActividad.html', context)
+
+    def post(self, request, *args, **kwargs):
+        if request.method == 'POST':
+            form = ActividadEstudianteForm(request.POST, request.FILES)
+            print(form)
+            if form.is_valid():
+                estudiante = form.cleaned_data['estudiante']
+                activity = form.cleaned_data['activity']
+                estado = form.cleaned_data['estado']
+                nota = form.cleaned_data['nota'] 
+                comentario = form.cleaned_data['comentario'] 
+                fecha_entrega = form.cleaned_data['fecha_entrega'] 
+                
+                p, created = Estudiante_Actividad.objects.get_or_create(estudiante=estudiante, activity=activity, estado=estado,
+                                                            nota=nota, comentario=comentario, fecha_entrega=fecha_entrega)
+                p.save()
+                form.save()
+                return redirect('seed2:dashboardStudent')
+        context={ 
+            
+        }
+        return render(request, 'Grupos/dashboard_estudiante.html',context)
+
+
 
 """
 CRUD DE GRUPOS 
 """
-@method_decorator([login_required], name='dispatch')
+
+@method_decorator([login_required, docente_required], name='dispatch')
 class GrupoCreationView(View):
     def get(self, request, *args, **kwargs):
         form = GrupoCreateForm()
         context = { 
             'grupos': Grupo.objects.filter(docente=request.user.id).all(),
-            'soy':request.user.email,
+            'soy':request.user,
             'form':form 
         }
         return render(request, 'Grupos/grupoCreate.html', context)
@@ -183,26 +235,27 @@ class GrupoCreationView(View):
         METODO PARA ASIGNAR UN ESTUDIANTE A UN GRUPO 
     """
     def setUserToStudent(grupo):
-        rutaCSV =  'media/' + grupo.estudiantes.name
-        print('ruta',rutaCSV)
-        correos = read_cvs_to_list(rutaCSV)
-        for estudiante in correos:
-            print(estudiante[0])
-            student = Estudiante()
-            email = str(estudiante[0])
-            try:
-                user = Usuario.objects.get(email=email)
-                student.user = user
-                student.grupo = Grupo.objects.get(codigo_grupo=grupo.codigo_grupo)
-                user.is_estudiante = True
-                user.save()
-                student.save()
-            except: 
-                pass
+        if grupo.estudiantes.name != None:
+            rutaCSV =  'media/' + grupo.estudiantes.name
+            print('ruta',rutaCSV)
+            correos = read_cvs_to_list(rutaCSV)
+            for estudiante in correos:
+                print(estudiante[0])
+                student = Estudiante()
+                email = str(estudiante[0])
+                try:
+                    user = Usuario.objects.get(email=email)
+                    student.user = user
+                    student.grupo = Grupo.objects.get(codigo_grupo=grupo.codigo_grupo)
+                    user.is_estudiante = True
+                    user.save()
+                    student.save()
+                except: 
+                    pass
                 
 
 
-@method_decorator([login_required], name='dispatch')
+@method_decorator([login_required, docente_required], name='dispatch')
 class GrupoDetailView(View):
 
     def get(self, request, codigo_grupo, *args, **kwargs):

@@ -14,15 +14,7 @@
             <p>You're Teacher? Join us!</p>
             <form method="POST">
                 {% csrf_token %}    
-                {{ form.email }}
-                {{ form.nombre}}
-                {{ form.url_img }}
-                <input type="hidden" name="email" id="id_email1" placeholder="email" value="{{user.socialaccount_set.all.0.extra_data.email}}" for="{{user.socialaccount_set.all.0.extra_data.email}}">
-                <input type="hidden" name="nombre" id="id_nombre1" placeholder="nombre" value="{{user.socialaccount_set.all.0.extra_data.name}}" >
-                <input type="hidden" name="url_img" id="id_picture1" placeholder="picture" value="{{user.socialaccount_set.all.0.extra_data.picture}}" >
-              
-                <h3>{{user.socialaccount_set.all.0.extra_data.email}} - {{user.socialaccount_set.all.0.extra_data.name}} - {{user.socialaccount_set.all.0.extra_data.picture}}</h3>
-  
+                <input type="hidden" name="user" value="{{user.id}}">
 
                 <button type="submit">Submit</button>
                    
