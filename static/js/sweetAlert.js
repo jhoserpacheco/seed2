@@ -1,7 +1,5 @@
-async function warningDeleteGrupo(nombre,pk){
 
-    console.log("warningDeleteGrupo");
-
+async function warningDeleteGrupo(nombre,pk,padre){
     await Swal.fire({
         title: '¿Eliminar grupo '+nombre+'?',
         icon: 'warning',
@@ -17,15 +15,29 @@ async function warningDeleteGrupo(nombre,pk){
         { 
             var request = $.ajax({
                 type: "GET",
-                url: "eliminar_identificador/",
+                url: "/eliminar_identificador/",
                 data: {
                     csrfmiddlewaretoken: '{% csrf_token %}',
                     "identificador_id": pk                    
                 },
             });
             request.done(function(response) {
-                Swal.fire('Eliminado!', '', 'success')
-                window.location.href = "../dashboardDocente/"
+                Swal.fire({
+                    title:'Eliminado!',
+                    icon:'success',
+                    showConfirmButton: true,
+                    confirmButtonText: 'Ok',
+                    //confirmButtonColor: 'green',
+                    timer:1500,
+                    timerProgressBar: true,
+
+                }).then((result) => {
+                    if (padre=="1") {                        
+                        window.location.href = "../create";
+                    }
+                    else
+                        location.reload();
+                })                
             });
             
         }

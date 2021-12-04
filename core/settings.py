@@ -84,7 +84,7 @@ ACCOUNT_UNIQUE_EMAIL = True # email is unique
 ACCOUNT_EMAIL_REQUIRED = True # email is required
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory' # La cuenta realmente exista
 ACCOUNT_AUTHENTICATION_METHOD = True
-SOCIALACCOUNT_AUTO_SIGNUP = False 
+SOCIALACCOUNT_AUTO_SIGNUP = True # Signup automaticamente cuando se registra con google
 
 # enable email scope for
 SOCIALACCOUNT_PROVIDERS = {

@@ -24,7 +24,7 @@ urlpatterns = [
     path('dashboardDocente/grupos/<codigo_grupo>/', GrupoDetailView.as_view(), name='detailGrupo'),
     path('dashboardDocente/grupos/<pk>/update/', GrupoUpdateView.as_view(), name='updateGrupo'),
     path('dashboardDocente/grupos/<pk>/delete/', GrupoDeleteView.as_view(), name='deleteGrupo'),
-    url(r'eliminar_identificador/$', eliminar_identificador, name='eliminar_identificador'),
+    url(r'eliminar_identificador/$', eliminar_identificador, name='eliminar_identificador'),#url de ajax para eliminar identificador(grupo)
 
     ## Actividad
     path('dashboardDocente/actividad/create', ActividadCreationView.as_view(), name='createActividad'),

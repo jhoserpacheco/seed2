@@ -25,17 +25,26 @@
                 Email del usuario {{soy}}
                 <div class="row" >
                   {% for g in grupos %}
-                    <div class="col m-3  grid-margin transparent" >
-                    <a href="{% url 'seed2:detailGrupo' g.codigo_grupo %}" style="text-decoration: none;">
-                      <div class="card card-tale" >
-                        <div class="card-body">
-                          <p class="mb-4" >{{g.codigo_grupo}}</p>
-                          <p class="fs-30 mb-2">{{g.nombre}}</p>
-                          <p>{{g.docente}}</p>
+                        <div class="col m-3  grid-margin transparent" >
+                            <div class="card card-tale" >
+                                <div class="card-body">
+                                    <div class="row">
+                                        <p class="mb-4 col" >{{g.codigo_grupo}}</p>
+                                        <div class="col">
+                                            <div class="d-flex justify-content-end align-items-start">                                            
+                                                <button type="button" onclick="warningDeleteGrupo(nombre='{{g.nombre}}',pk='{{g.codigo_grupo}}')" class="ml-3 btn btn-primary btn-rounded btn-icon ">
+                                                    <i class="ti-trash"></i>
+                                                </button>                               
+                                            </div>                                                                        
+                                        </div>
+                                    </div>
+                                    <a href="{% url 'seed2:detailGrupo' g.codigo_grupo %}" style="text-decoration: none !important; color: white">
+                                        <p class="fs-30 mb-2">{{g.nombre}}</p>
+                                        <p>{{g.docente}}</p>
+                                    <a/>
+                                </div>
+                            </div>                            
                         </div>
-                      </div>
-                      <a/>
-                    </div>
                   {% endfor %}
                 </div>
                 
@@ -130,7 +139,7 @@
   <!-- Custom js for this page-->
   <script src="{%static 'js/dashboard.js'%}"></script>
   <script src="{%static 'js/Chart.roundedBarCharts.js'%}"></script>
-  <script src="{%static 'js/gruposActive.js'}"
+  <script src="{%static 'js/sweetAlert.js'%}"></script>
   <!-- End custom js for this page-->
 {% endblock javascripts %} 
 
