@@ -27,7 +27,15 @@
                   <div class="card w-100 mr-3 mb-3">
                       <div class="col m-3 grid-margin transparent">
                           <div class="card-body">
-                              <h1 class="display-2"><a href="{% url 'seed2:updateActividad' a.codigo%}">{{a.nombre_ac}}</a></h1>
+                            <div class="row">
+                              <h1 class="col-9 display-2"><a href="{% url 'seed2:updateActividad' a.codigo%}">{{a.nombre_ac}}</a></h1>
+                              <div class="col-3 d-flex justify-content-end align-items-start">                                            
+                                <button type="button" onclick="warningDeleteActividad(nombre='{{a.nombre_ac}}',pk='{{a.codigo}}')" class="ml-3 btn btn-primary btn-rounded btn-icon ">
+                                    <i class="ti-trash"></i>
+                                </button>                               
+                            </div>  
+                            </div>
+                              
                               <h4 class="">Tema: {{a.tema_actividad}}</h4>
                               <h4 class="">Estructura de datos: {{a.estructura_de_datos}}</h4>
                               <p blockquote class="blockquote" class="">Descripcion: {{a.descripcion}}</p>
@@ -150,7 +158,7 @@
   <!-- Custom js for this page-->
   <script src="{%static 'js/dashboard.js'%}"></script>
   <script src="{%static 'js/Chart.roundedBarCharts.js'%}"></script>
-  <script src="{%static 'js/gruposActive.js'}"
+  <script src="{%static 'js/sweetAlert.js'%}"></script>
   <!-- End custom js for this page-->
 {% endblock javascripts %} 
 
