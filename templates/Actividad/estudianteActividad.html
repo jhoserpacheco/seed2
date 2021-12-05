@@ -14,6 +14,7 @@
                         <div class="col-12 col-xl-8 mb-4 mb-xl-0">
                             <h3 class="font-weight-bold">Bienvenido</h3>
                             <h6 class="font-weight-normal mb-0">Detalles Grupo </h6>
+                            <h1>{{v}}</h1>
                         </div>
                     </div>
                 </div>
@@ -24,18 +25,18 @@
                         <div class="card w-100 mr-3 mb-3">
                             <div class="col m-3  grid-margin transparent">
                                 <div class="card-body">
-                                    <form class="forms-sample" method="GET">
+                                    <form class="forms-sample" method="POST">
                                         {% csrf_token%}
                                         
                                         <div class="form-group col">
                                             <label for="exampleTextarea1">Actividad</label>
-                                            <input class="form-control"  id="activity" value="{{actividad.codigo}}" name="activity" type="text" disabled>
+                                            <input class="form-control"  id="activity" value="{{actividad.codigo}}" name="activity" type="text" >
                                         </div>
                                         
                                         <div class="form-group col">
                                             <label for="exampleTextarea1">Tiempo Restante</label> <br>
                                             {{actividad.timeleft}}
-                                            <input class="form-control"  id="fecha_entrega" value="{{now}}" name="fecha_entrega" type="datetime-local" hidden>
+                                            <input class="form-control"  id="fecha_entrega" value="{{now}}" name="fecha_entrega" type="datetime-local" >
                                         </div>
                                         <div class="form-group col">
                                             <input class="form-control"  id="estudiante" name="estudiante" value="{{user.get_estudiante.user.id}}" type="hidden">
@@ -46,11 +47,11 @@
                                         </div>
                                         <div class="form-group col">
                                             <label for="exampleTextarea1">Estado</label>
-                                            <input class="form-control"  id="estado" name="estado" type="text" value="P" disabled>
+                                            <input class="form-control"  id="estado" name="estado" type="text" value="P" >
                                         </div>
                                         <div class="form-group col">
                                             <label for="exampleTextarea1">Nota</label>
-                                            <input class="form-control"  id="nota" name="nota" type="number" min="0" value="0" disabled>
+                                            <input class="form-control"  id="nota" name="nota" type="number" min="0" value="0" >
                                         </div>
                                         <button type="submit" class="btn btn-block btn-primary mr-2">Submit</button>
                                     </form>

@@ -168,13 +168,15 @@ class SubirActividadEstudianteView(View):
             'soy':request.user,
             'actividad': actividad,
             'now': actividad.getNow(),
-            'form':form 
+            'form':form, 
+            'v': self.validarEntrega(actividad.codigo, request.user.get_estudiante().user.id, request)
         }
         return render(request, 'Actividad/estudianteActividad.html', context)
 
     def post(self, request, *args, **kwargs):
         if request.method == 'POST':
             form = ActividadEstudianteForm(request.POST, request.FILES)
+
             print(form)
             if form.is_valid():
                 estudiante = form.cleaned_data['estudiante']
@@ -187,12 +189,18 @@ class SubirActividadEstudianteView(View):
                 p, created = Estudiante_Actividad.objects.get_or_create(estudiante=estudiante, activity=activity, estado=estado,
                                                             nota=nota, comentario=comentario, fecha_entrega=fecha_entrega)
                 p.save()
-                form.save()
                 return redirect('seed2:dashboardStudent')
         context={ 
             
         }
         return render(request, 'Grupos/dashboard_estudiante.html',context)
+
+    def validarEntrega(self, pk, e, request, *args, **kwargs):
+        actividad = Actividad.objects.filter(codigo=pk, estudianteAct = e).first()
+        ae = Estudiante_Actividad.objects.filter(activity=actividad, estudiante=e).all()
+        print(pk)
+        return len(ae) > 0
+        
 
 
 
