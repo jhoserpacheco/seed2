@@ -10,6 +10,7 @@
     </title> 
     <!-- load static files -->
     {% load static %}
+   
     
      <!-- plugins:css -->
     <link rel="stylesheet" href="{%static 'vendors/feather/feather.css'%}">
@@ -38,10 +39,15 @@
 <body>
     <div class="container-scroller">
         <div class="container-fluid page-body-wrapper">
-            {% include 'includes/_sidebar.html' %}    
             {% include 'includes/_navbar.html' %}
+            {% if user.is_docente%} 
+                {% include 'includes/_sidebarEstudiante.html' %}
+            {% endif %}
+            {% if user.is_estudiante%} 
+                {% include 'includes/_sidebarEstudiante.html' %}
+            {% endif %}
             {% block content %}{% endblock content %}
-            {% include 'includes/_settings-panel.html' %}            
+            {% include 'includes/_settings-panel.html' %}
         </div>        
     </div>
     {% include 'includes/_footer.html' %}

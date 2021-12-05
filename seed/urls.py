@@ -12,7 +12,7 @@ app_name = 'seed2'
 urlpatterns = [
     path('',logi.as_view(), name='login'),
     path('logout/',logou.as_view(), name='logout'),
-    path('loging/', loging.as_view(), name='loging'),
+    #path('loging/', loging.as_view(), name='loging'),
     path('accounts/login/', auth_views.LoginView.as_view()),
     path('profile/', ProfileView.as_view(), name='profile'),
     path('create/', CreateTeacherView.as_view(), name='create'),
