@@ -169,7 +169,7 @@ class Estudiante_Actividad(models.Model):
         ordering = ['estado']
 
     def __str__(self):
-        return str(self.actividad) +' - '+ str(self.estudiante) 
+        return str(self.activity) +' - '+ str(self.estudiante) 
 
     def getNow(self):
         return now().strftime("%Y-%m-%d %I:%M:%S")
