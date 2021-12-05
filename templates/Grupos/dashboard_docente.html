@@ -1,7 +1,6 @@
 {% extends "layouts/base-fullscreen.html" %}
 {% load static%}
 {% block title %} Dashboard {% endblock %}
-{% load static%}
 {% block content %} 
 
 <div class="main-panel">
@@ -23,7 +22,7 @@
                             <h3 class="">Grupos</h3>
                         </a>
                     </div> 
-                    <div class="row">
+                    <div class="row">                        
                         {% for g in grupos %}
                         <div class="col m-3  grid-margin transparent" >
                             <div class="card card-tale" >
