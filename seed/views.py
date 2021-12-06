@@ -58,6 +58,7 @@ class logi(View):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
+                print("userrrr", user)
                 return redirect('seed2:dashboardDocente')
             else:
                 return redirect('seed2:login')
