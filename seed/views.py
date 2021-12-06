@@ -165,20 +165,19 @@ class SubirActividadEstudianteView(View):
         form = ActividadEstudianteForm()
         actividad = Actividad.objects.filter(codigo=pk).first()
         context = { 
-            'soy':request.user,
             'actividad': actividad,
             'now': actividad.getNow(),
             'form':form, 
-            'v': self.validarEntrega(actividad.codigo, request.user.get_estudiante().user.id, request)
+            'actividadSubida': self.validarEntrega(actividad.codigo, request.user.get_estudiante().user.id, request)
         }
         return render(request, 'Actividad/estudianteActividad.html', context)
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, pk, *args, **kwargs):
         if request.method == 'POST':
             form = ActividadEstudianteForm(request.POST, request.FILES)
 
             print(form)
-            if form.is_valid():
+            if form.is_valid() and not self.validarEntrega(pk, request.user.get_estudiante().user.id, request):
                 estudiante = form.cleaned_data['estudiante']
                 activity = form.cleaned_data['activity']
                 estado = form.cleaned_data['estado']
@@ -341,8 +340,10 @@ class ActividadDetailView(View):
 
     def get(self, request, codigo, *args, **kwargs):
         actividad = get_object_or_404(Actividad, codigo=codigo)
+        actividadEstudiante = Estudiante_Actividad.objects.filter(activity=codigo).all()
         context = { 
             'actividad': actividad,
+            'entregaActividad' : actividadEstudiante,
         }
         return render(request, 'Actividad/actividadDetalle.html',context)
 
@@ -359,6 +360,14 @@ class ActividadDeleteView(DeleteView):
     model = Actividad
     template_name = 'Actividad/actividadEliminar.html'
     success_url = reverse_lazy('seed2:dashboardDocente')
+
+class CalificarActividadView(View): 
+    def get(self, request, actividad, estudiante, *args, **kwargs):
+        actividadEstudiante = Estudiante_Actividad.objects.filter(activity=actividad, estudiante=estudiante).first()
+        context = { 
+            'entregaActividad' : actividadEstudiante,
+        }
+        return render(request, 'Actividad/calificarActividad.html',context)
 
 
 """

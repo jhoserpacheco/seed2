@@ -17,9 +17,9 @@ urlpatterns = [
     path('profile/', ProfileView.as_view(), name='profile'),
     path('create/', CreateTeacherView.as_view(), name='create'),
     path('list/', ListTeacherView.as_view(), name='list'),
-    path('dashboardStudent/', DashboardStudentView.as_view(), name='dashboardStudent'),
+    path('dashboardEstudiante/', DashboardStudentView.as_view(), name='dashboardStudent'),
     path('dashboardDocente/',DashboardDocenteView.as_view(), name='dashboardDocente'),
-    path('dashboardStudent/actividad/<pk>', SubirActividadEstudianteView.as_view(), name='uploadActividad'),
+    path('dashboardEstudiante/actividad/<pk>', SubirActividadEstudianteView.as_view(), name='uploadActividad'),
     ## Grupos
     path('dashboardDocente/grupos/create', GrupoCreationView.as_view(), name='createGrupo'),
     path('dashboardDocente/grupos/<codigo_grupo>/', GrupoDetailView.as_view(), name='detailGrupo'),
@@ -34,6 +34,7 @@ urlpatterns = [
     path('dashboardDocente/actividad/<int:codigo>/', ActividadDetailView.as_view(), name='detailActividad'),
     path('dashboardDocente/actividad/<pk>/update/', ActividadUpdateView.as_view(), name='updateActividad'),
     path('dashboardDocente/actividad/<pk>/delete/', ActividadDeleteView.as_view(), name='deleteActividad'),
+    path('dashboardDocente/calificarActividad/<pk><id>/' , CalificarActividadView.as_view(), name='calificarActividad'),
 
     ## Tema
     path('dashboardDocente/tema/create', TemaCreationView.as_view(), name='createTema'),

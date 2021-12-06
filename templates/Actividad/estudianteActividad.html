@@ -14,7 +14,7 @@
                         <div class="col-12 col-xl-8 mb-4 mb-xl-0">
                             <h3 class="font-weight-bold">Bienvenido</h3>
                             <h6 class="font-weight-normal mb-0">Detalles Grupo </h6>
-                            <h1>{{v}}</h1>
+                            {{soy}}
                         </div>
                     </div>
                 </div>
@@ -53,8 +53,12 @@
                                             <label for="exampleTextarea1">Nota</label>
                                             <input class="form-control"  id="nota" name="nota" type="number" min="0" value="0" >
                                         </div>
-                                        <button type="submit" class="btn btn-block btn-primary mr-2">Submit</button>
+                                        {% if actividadSubida == False%}
+                                            <button type="submit" class="btn btn-block btn-primary mr-2">Submit</button> 
                                     </form>
+                                            {% else %}
+                                                <h2 class="fs-30 mb-1 col mt-5">ACTIVIDAD YA ENTREGADA</h2>
+                                            {% endif %}
                                 </div>
                             </div>
                         </div>

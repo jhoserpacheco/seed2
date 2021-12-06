@@ -40,12 +40,7 @@
     <div class="container-scroller">
         <div class="container-fluid page-body-wrapper">
             {% include 'includes/_navbar.html' %}
-            {% if user.is_docente%} 
-                {% include 'includes/_sidebarEstudiante.html' %}
-            {% endif %}
-            {% if user.is_estudiante%} 
-                {% include 'includes/_sidebarEstudiante.html' %}
-            {% endif %}
+                {% include 'includes/_sidebar.html' %}
             {% block content %}{% endblock content %}
             {% include 'includes/_settings-panel.html' %}
         </div>        
