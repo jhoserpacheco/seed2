@@ -21,8 +21,9 @@
           <div class="row">
             <!--espacio para las actividades-->
             <div class="col-md-7 grid-margin">
-              <div class="row">
+              
                   <!--Actividades-->
+                  <div class="card">
                   {% for a in actividades %}
                   <div class="card w-100 mr-3 mb-3">
                       <div class="col m-3 grid-margin transparent">
@@ -34,8 +35,7 @@
                                     <i class="ti-trash"></i>
                                 </button>                               
                             </div>  
-                            </div>
-                              
+                            </div>                              
                               <h4 class="">Tema: {{a.tema_actividad}}</h4>
                               <h4 class="">Estructura de datos: {{a.estructura_de_datos}}</h4>
                               <p blockquote class="blockquote" class="">Descripcion: {{a.descripcion}}</p>

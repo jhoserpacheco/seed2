@@ -9,24 +9,20 @@
 
 <div class="main-panel">
     <div class="content-wrapper">
-
         <div class="row">
             <!--espacio para las actividades-->
             <div class="col-md-7 grid-margin">
-                
-
                 <div class="card w-100 mr-3 mb-3">
                     <div class="col m-3 grid-margin transparent">
                         <div class="card-body">
-                          <div class="row">
-                            <h1 class="col-9 display-2">{{actividad.nombre_ac}}</h1>
-                            <div class="col-3 d-flex justify-content-end align-items-start">                                            
-                              <button type="button" onclick="warningDeleteActividad(nombre='{{actividad.nombre_ac}}',pk='{{actividad.codigo}}',padre='1')" class="ml-3 btn btn-primary btn-rounded btn-icon ">
-                                  <i class="ti-trash"></i>
-                              </button>                               
-                          </div>  
-                          </div>
-                            
+                            <div class="row">
+                                <h1 class="col-9 display-2">{{actividad.nombre_ac}}</h1>
+                                <div class="col-3 d-flex justify-content-end align-items-start">
+                                    <button type="button" onclick="warningDeleteActividad(nombre='{{actividad.nombre_ac}}',pk='{{actividad.codigo}}',padre='1')" class="ml-3 btn btn-primary btn-rounded btn-icon">
+                                        <i class="ti-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
                             <h4 class="">Tema: {{actividad.tema_actividad}}</h4>
                             <h4 class="">Estructura de datos: {{actividad.estructura_de_datos}}</h4>
                             <p blockquote class="blockquote" class="">Descripcion: {{actividad.descripcion}}</p>
@@ -36,10 +32,9 @@
                             </div>
                         </div>
                     </div>
+                    <!--fin espacio para las actividades-->
                 </div>
             </div>
-            <!--fin espacio para las actividades-->
-
             <!--espacio para actividades grupos-->
             <div class="col-md-5 grid-margin">
                 <!--crear las actividades -->
@@ -47,54 +42,52 @@
                     <div class="card w-100 mb-3">
                         <div class="card-body">
                             <h4 class="card-title">Actualizar Actividad</h4>
-                                <form class="forms-sample" method="POST">
-                                    {% csrf_token %}
-                                    <div class="row">                            
+                            <form class="forms-sample" method="POST">
+                                {% csrf_token %}
+                                <div class="row">
                                     <div class="form-group col">
                                         <label for="exampleInputName1">Codigo Actividad</label>
-                                        <input type="number" class="form-control" id="codigo" name="codigo" placeholder="Name" min="1" value='{{actividad.codigo}}' readonly>
+                                        <input type="number" class="form-control" id="codigo" name="codigo" placeholder="Name" min="1" value="{{actividad.codigo}}" readonly />
                                     </div>
                                     <div class="form-group col">
                                         <label for="exampleInputName1">Nombre Actividad</label>
-                                        <input type="text" class="form-control" id="nombre_ac" name="nombre_ac" placeholder="Name" value='{{actividad.nombre_ac}}'>
+                                        <input type="text" class="form-control" id="nombre_ac" name="nombre_ac" placeholder="Name" value="{{actividad.nombre_ac}}" />
                                     </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleTextarea1">Descripcion</label>
+                                    <textarea class="form-control" id="descripcion" name="descripcion" value="" rows="4">{{actividad.descripcion}}</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputName1">Tema Actividad</label><br />
+                                    {{form.tema_actividad}}
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleTextarea1">Estructura de datos</label><br />
+                                    {{form.estructura_de_datos}}
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col">
+                                        <label for="exampleTextarea1">Fecha inicio</label>
+                                        <input class="form-control" id="fecha_inicio" name="fecha_inicio" type="datetime-local" min="{{actividad.getFechaInicio}}" value="{{actividad.getFechaInicio}}" />
                                     </div>
-                                    <div class="form-group">
-                                        <label for="exampleTextarea1">Descripcion</label>
-                                        <textarea class="form-control" id="descripcion" name="descripcion" value=''rows="4">{{actividad.descripcion}}</textarea> 
+                                    <div class="form-group col">
+                                        <label for="exampleTextarea1">Fecha fin</label>
+                                        <input class="form-control" id="fecha_fin" name="fecha_fin" type="datetime-local" min="{{actividad.getFechaFin}}" value="{{actividad.getFechaFin}}" />
                                     </div>
-                                    <div class="form-group">
-                                    <label for="exampleInputName1">Tema Actividad</label><br>
-                                        {{form.tema_actividad}}
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleTextarea1">Estructura de datos</label><br>
-                                        {{form.estructura_de_datos}}
-                                    </div>
-                                    <div class="row">                            
-                                        <div class="form-group col">
-                                            <label for="exampleTextarea1">Fecha inicio</label>
-                                            <input class="form-control"  id="fecha_inicio" name="fecha_inicio" type="datetime-local" 
-                                            min='{{actividad.getFechaInicio}}' value='{{actividad.getFechaInicio}}'>
+                                </div>
+        
+                                <div class="row pl-3 pr-3 pb-3">
+                                    <label for="exampleTextarea1">
+                                        Visibilidad
+                                        <div class="form-check col">
+                                            <label class="form-check-label">
+                                                {{form.es_visible}} Mostrar
+                                            </label>
                                         </div>
-                                        <div class="form-group col">
-                                            <label for="exampleTextarea1">Fecha fin</label>
-                                            <input class="form-control"  id="fecha_fin" name="fecha_fin" type="datetime-local" 
-                                            min='{{actividad.getFechaFin}}' value='{{actividad.getFechaFin}}'>
-                                        </div>
-                                    </div>
-
-                                    <div class="row pl-3 pr-3 pb-3">
-                                    <label for="exampleTextarea1">Visibilidad
-                                    <div class="form-check col">
-                                        <label class="form-check-label">
-                                        {{form.es_visible}} 
-                                        Mostrar
-                                        </label>
-                                    </div></label>
-                                    
-                                    </div>
-                                <button type="submit" class="btn btn-block btn-primary mr-2">Update</button>   
+                                    </label>
+                                </div>
+                                <button type="submit" class="btn btn-block btn-primary mr-2">Update</button>
                             </form>
                         </div>
                     </div>
@@ -107,17 +100,13 @@
                             <div class="row mb-3">
                                 <h2 class="card-title col-6">Actividades sin publicar</h2>
                             </div>
-
-                            <ul class="">
-                                <li><a href="">{% lorem 1 b random %}</li>
-                            </ul>
                         </div>
                     </div>
                 </div>
                 <!--fin actividades pendientes-->
             </div>
             <!--fin espacio para actividades grupos-->
-        </div>
+        </div>        
     </div>
     <!-- content-wrapper ends -->
 </div>
