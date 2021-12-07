@@ -38,6 +38,18 @@ from django.views.generic.edit import (
 
 # Create your views here.
 
+def login_success(request):
+    """
+    Redirects users based on whether they are in the admins group
+    """
+    if request.user.is_docente:
+        return redirect('seed2:dashboardDocente')
+    elif request.user.is_estudiante:
+        return redirect('seed2:dashboardStudent')
+    else:
+        return redirect('seed2:login')
+
+
 #login de django
 class logou(View): 
     
@@ -49,20 +61,33 @@ class logou(View):
 
 class logi(View):
     def get(self, request, *args, **kwargs):
+        print("...validando template...")
         context={}
         return render(request, 'Cuenta/login.html', context)
     def post(self, request, *args, **kwargs):
         if request.method == 'POST':
+            print("...validando post user...")
             username = request.POST['useremail']
             password = request.POST['userpassword']
             user = authenticate(username=username, password=password)
-            if user is not None:
+            """if user is not None:
                 login(request, user)
-                print("userrrr", user)
+                if user.is_docente:
+                    print("userrrrrrrrrrrrrrrrr", request.user.is_docente)
                 return redirect('seed2:dashboardDocente')
             else:
                 return redirect('seed2:login')
-
+                """
+    def redirect(self, request, *args, **kwargs):
+        print("...validando direccionamiento...")
+        if request.use is None:
+            if request.user.is_docente:
+                pass
+                #return redirect('seed2:dashboardDocente')
+            else:
+                return redirect('seed2:dashboardEstudiante')
+        else:
+            return redirect('seed2:login')
 
 class loging(View):
     def get(self, request, *args, **kwargs):
