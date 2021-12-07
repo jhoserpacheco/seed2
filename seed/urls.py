@@ -11,6 +11,7 @@ app_name = 'seed2'
 
 urlpatterns = [
     path('',logi.as_view(), name='login'),
+    url(r'login_success/$', login_success, name='login_success'),
     path('logout/',logou.as_view(), name='logout'),
     #path('loging/', loging.as_view(), name='loging'),
     path('accounts/login/', auth_views.LoginView.as_view()),

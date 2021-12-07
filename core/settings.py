@@ -74,7 +74,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Login and logout views
 LOGIN_URL = 'seed2:login'
-LOGIN_REDIRECT_URL = reverse_lazy('seed2:dashboardDocente')
+LOGIN_REDIRECT_URL = 'login_success/'
 LOGOUT_REDIRECT_URL = reverse_lazy('seed2:login')
 
 # Additional configuration settings
