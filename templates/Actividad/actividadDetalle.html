@@ -30,6 +30,17 @@
                             <div class="row">
                                 <p class="text-dark mr-3">{{actividad.fecha_inicio}} - {{actividad.fecha_fin}}</p>
                             </div>
+                            <!-- Listado de estudiantes que entregaron actividades"-->
+                                {% for ae in entregaActividad%}
+                                    {{ae.estudiante}} <br>
+                                    {{ae.fecha_entrega}} <br>
+                                    {{ae.activity.codigo }}
+                                    {{ae.estudiante.user.id}}
+                                <a href="{% url 'seed2:calificarActividad' ae.estudiante.user.id ae.activity.codigo %}" class="btn btn-primary">
+                                    CALIFICAR
+                                </a>
+                                {% endfor %}
+                            <!-- FIN Listado de estudiantes que entregaron actividades"-->
                         </div>
                     </div>
                     <!--fin espacio para las actividades-->
@@ -86,13 +97,6 @@
                                             </label>
                                         </div>
                                     </div>
-                                    <!-- Listado de estudiantes que entregaron actividades"-->
-                                    {% for ae in entregaActividad%}
-                                        {{ae.estudiante}} <br>
-                                        {{ae.fecha_entrega}} <br>
-                                        <a href="{% url 'seed2:calificarActividad' ae.activity.codigo ae.estudiante.user.id%}">CALIFICAR</a>
-                                    {% endfor %}
-                                    <!-- FIN Listado de estudiantes que entregaron actividades"-->
                                     <div class="row pl-3 pr-3 pb-3">
                                     <label for="exampleTextarea1">Visibilidad
                                     <div class="form-check col">

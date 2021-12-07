@@ -14,7 +14,12 @@
                         <div class="col-12 col-xl-8 mb-4 mb-xl-0">
                             <h3 class="font-weight-bold">Bienvenido</h3>
                             <h6 class="font-weight-normal mb-0">Calificar Actividad </h6>
-                            {{soy}}
+                            {{entregaActividad}}
+                            <form class="form-horizontal" method="POST">
+                                {% csrf_token %}
+                                {{form.as_p}}
+                                <button type="submit" class="btn btn-primary mr-2">Guardar</button>
+                            </form>
                         </div>
                     </div>
                 </div>

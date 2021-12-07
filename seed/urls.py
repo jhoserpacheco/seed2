@@ -34,7 +34,7 @@ urlpatterns = [
     path('dashboardDocente/actividad/<int:codigo>/', ActividadDetailView.as_view(), name='detailActividad'),
     path('dashboardDocente/actividad/<pk>/update/', ActividadUpdateView.as_view(), name='updateActividad'),
     path('dashboardDocente/actividad/<pk>/delete/', ActividadDeleteView.as_view(), name='deleteActividad'),
-    path('dashboardDocente/calificarActividad/<pk><id>/' , CalificarActividadView.as_view(), name='calificarActividad'),
+    path('dashboardDocente/calificarActividad/<actividad>/<estudiante>/' , CalificarActividadView.as_view(), name='calificarActividad'),
 
     ## Tema
     path('dashboardDocente/tema/create', TemaCreationView.as_view(), name='createTema'),

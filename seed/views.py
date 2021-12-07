@@ -365,10 +365,24 @@ class ActividadDeleteView(DeleteView):
 class CalificarActividadView(View): 
     def get(self, request, actividad, estudiante, *args, **kwargs):
         actividadEstudiante = Estudiante_Actividad.objects.filter(activity=actividad, estudiante=estudiante).first()
+        form = ActividadEstudianteForm()
         context = { 
+            'form':form,
             'entregaActividad' : actividadEstudiante,
         }
         return render(request, 'Actividad/calificarActividad.html',context)
+    
+    def post(self, request, actividad, estudiante, *args, **kwargs):
+        actividadEstudiante = Estudiante_Actividad.objects.filter(activity=actividad, estudiante=estudiante).first()
+        form = ActividadEstudianteForm(request.POST)
+        if form.is_valid():
+            actividadEstudiante.nota = form.cleaned_data['nota']
+            actividadEstudiante.comentario = form.cleaned_data['comentario']
+            actividadEstudiante.save()
+            return redirect('seed2:calificarActividad', actividad, estudiante )
+        context={ 
+        }
+        return render(request, 'Grupos/dashboard_docente.html',context)
 
 
 """
@@ -397,7 +411,8 @@ class TemaCreationView(View):
                 codigo_tema = form.cleaned_data['codigo_tema']
                 nombre_tema = form.cleaned_data['nombre_tema']
                 grupo_tema = form.cleaned_data['grupo_tema'] 
-                p, created = Tema.objects.get_or_create(codigo_tema=codigo_tema, nombre_tema=nombre_tema, grupo_tema=grupo_tema)
+                estado = 'C'
+                p, created = Tema.objects.get_or_create(codigo_tema=codigo_tema, nombre_tema=nombre_tema, grupo_tema=grupo_tema, estado=estado)
                 p.save()
                 form.save()
                 return redirect('seed2:createTema')
