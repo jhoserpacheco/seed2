@@ -293,7 +293,6 @@ class GrupoCreationView(View):
 
 @method_decorator([login_required, docente_required], name='dispatch')
 class GrupoDetailView(View):
-
     def get(self, request, codigo_grupo, *args, **kwargs):
         grupo = get_object_or_404(Grupo, codigo_grupo=codigo_grupo)
         tema = Tema.objects.filter(grupo_tema=codigo_grupo)
@@ -305,7 +304,6 @@ class GrupoDetailView(View):
             'estudiantes': grupo.estudiante_set.all(),
             'temas': tema,
             'actividades': actividad
-
         }
         return render(request, 'Grupos/grupoDetalle.html',context)
 
@@ -498,3 +496,18 @@ class TemaActividadView(View):
 """
 CRUD DE ESTUDIANTE ACTIVIDAD
 """
+@method_decorator([login_required, estudiante_required], name='dispatch')
+class GrupoDetailStudentView(View):
+    def get(self, request, codigo_grupo, *args, **kwargs):
+        grupo = get_object_or_404(Grupo, codigo_grupo=codigo_grupo)
+        tema = Tema.objects.filter(grupo_tema=codigo_grupo)
+        actividad = Actividad.objects.filter(
+            tema_actividad=Subquery(tema.values('codigo_tema'))
+        )
+        context = { 
+            'grupo':grupo,
+            'estudiantes': grupo.estudiante_set.all(),
+            'temas': tema,
+            'actividades': actividad
+        }
+        return render(request, 'Grupos/grupoDetalleEstudiante.html',context)

@@ -1,0 +1,147 @@
+{% extends "layouts/base-fullscreen.html" %}
+{% load static%}
+{% block title %} Dashboard {% endblock %}
+{% load static%}
+{% block stylesheets %}
+
+{%endblock%} 
+{% block content %} 
+    <div class="main-panel">
+        <div class="content-wrapper">
+            <div class="row">
+            <div class="col-md-12 grid-margin">
+                <div class="row">
+                <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                    <h3 class="font-weight-bold">Bienvenido</h3>
+                    <h6 class="font-weight-normal mb-0">Detalles Grupo </h6>
+                </div>
+                </div>
+            </div>
+            </div>
+            <div class="row">
+            <!--espacio para los grupos-->
+            <div class="col-md-7 grid-margin stretch-card">     
+                <div class="row">
+                    <div class=" card w-100 mr-3 mb-3">
+                        <div class="col m-3  grid-margin transparent">
+                            <div class="card-body">
+                                <div class="row">
+                                    <!--<h1 class="display-1 col-9">{{grupo.nombre}}</h1>-->+
+                                    <h1 class="display-1 col-9">Nombre Grupo</h1>
+                                    <div class="col-3">
+                                        <div class="d-flex justify-content-center align-items-start">                                            
+                                            <!--<button type="button" onclick="warningDeleteGrupo(nombre='{{grupo.nombre}}',pk='{{grupo.codigo_grupo}}',padre='1')" class="ml-3 btn btn-inverse-primary ">
+                                            Eliminar
+                                            </button> -->
+                                            <button type="button"  class="ml-3 btn btn-inverse-primary ">
+                                                Eliminar
+                                                </button> 
+                                        </div> 
+                                    </div>                                
+                                </div>
+                               <!-- <h1 class="display-3">Codigo: {{grupo.codigo_grupo}}</h1>
+                                <h1 class="display-4">Docente: {{grupo.docente}}</h1>-->
+                                <h1 class="display-3">Codigo: {{grupo.codigo_grupo}}</h1>
+                                <h1 class="display-4">Docente: {{grupo.docente}}</h1>
+                                
+                            </div>
+                        </div>
+                    </div>   
+
+                    <div class="card w-100 mr-3 mb-3">
+                        <div class="col m-3  grid-margin transparent">
+                            <div class="card-body">
+                                <h1 class="display-1">Estudiantes</h1>
+                                    <div class="table-responsive">
+                                        <table class="table table-hover" id="DataTable">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Email</th>
+                                                    <th scope="col">Nombre</th>
+                                                    <th scope="col">Foto</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- td table -->
+                                                <!--{% for e in estudiantes%}
+                                                <tr>
+                                                    <td>{{e.user.email}}</td>
+                                                    <td>{{e.user.first_name}} {{e.user.last_name}}</td>
+                                                    <td><img src="{{e.user.url_img}}" class="img-thumbnail" /></td>
+                                                </tr>
+                                                {% endfor %}-->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--fin espacio para los grupos-->
+
+            <!--espacio para crear grupos-->
+            <div class="col-md-5 grid-margin">
+                <div class="row">
+                    <div class="card w-100 mb-3 ">
+                        <div class="card-body">
+                            <div class="row">
+                                <h4 class="display-3  col d-flex align-items-center"><strong>Temas</strong></h4>                                
+                            </div>
+                            <div class="row">
+                                <ul class="ml-3">
+                                    <!--{% for t in temas%}
+                                        <li class="">{{t}}</li>
+                                    {% endfor %}-->
+                                </ul>
+                            </div>                        
+                        </div>   
+                    </div>
+                    <div class="card w-100 mb-3 ">
+                        <div class="card-body">
+                            <div class="row">
+                                <h4 class="display-3  col d-flex align-items-center"><strong>Actividades</strong></h4>                                
+                            </div>
+                            <div class="row">
+                                <ul class="ml-3">
+                                    <!--{% for a in actividades%}
+                                    <li class="">{{a}}</li>
+                                    {% endfor %} --> 
+                                </ul>
+                            </div>                        
+                        </div>    
+                    </div>
+                    
+                </div>
+                <div class="row ">
+                    <div class="card w-100">
+                        <div class="card-body">
+                        <h4 class="card-title">Informacion General</h4>
+                        <ul class="">
+                            <form method="POST">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <input type="submit" value="Update">
+                            </form> 
+                            <li><a href="">item 1</li>
+                        </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!--fin espacio para crear grupos-->
+            </div>
+        </div>
+    <!-- content-wrapper ends -->
+    </div>
+    
+    
+{% endblock %}
+{% block javascripts %}
+<!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="{%static 'js/sweetAlert.js'%}"></script>
+    <!-- Scripts personalizados-->
+     
+{% endblock %}

@@ -2,6 +2,7 @@ from django.http import JsonResponse
 from .models import *
 
 def eliminar_grupo(request):
+    pk = request.GET.get('identificador_id')
     identificador = Grupo.objects.get(pk=pk)
     identificador.delete()
     response = {}
