@@ -163,6 +163,7 @@ class Estudiante_Actividad(models.Model):
     nota = models.FloatField(default=0.0)
     comentario = models.TextField(max_length=500, default="No hay comentarios.")
     fecha_entrega = models.DateTimeField(default=now, blank=True)
+    entregaFile = models.FileField(upload_to='entregas/', null=True, blank=True)
     class Meta:
         verbose_name = "Estudiante_Actividad"
         verbose_name_plural = "Estudiantes_Actividades"

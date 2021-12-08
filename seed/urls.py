@@ -1,11 +1,16 @@
 from django.conf.urls import url
 from django.urls.resolvers import URLPattern
 from django.urls import path, include, re_path
+from django.conf.urls.static import static
+from django.conf import settings
 from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import views as auth_views
 from .views import *
 from .ajax import *
+
+
+
 
 app_name = 'seed2'
 
@@ -45,4 +50,4 @@ urlpatterns = [
     path('dashboardDocente/tema/<pk>/actividades/', TemaActividadView.as_view(), name='temaActividades'), 
     
     
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

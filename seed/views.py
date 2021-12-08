@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db.models.expressions import Subquery
+from django.http.response import FileResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import View, UpdateView, DeleteView
@@ -34,7 +35,8 @@ from django.views.generic.edit import (
     UpdateView,
     DeleteView
 )
-
+import os
+from django.conf import settings
 
 # Create your views here.
 
@@ -210,9 +212,10 @@ class SubirActividadEstudianteView(View):
                 nota = form.cleaned_data['nota'] 
                 comentario = form.cleaned_data['comentario'] 
                 fecha_entrega = form.cleaned_data['fecha_entrega'] 
+                entregaFile = form.cleaned_data['entregaFile']
                 
                 p, created = Estudiante_Actividad.objects.get_or_create(estudiante=estudiante, activity=activity, estado=estado,
-                                                            nota=nota, comentario=comentario, fecha_entrega=fecha_entrega)
+                                                            nota=nota, comentario=comentario, fecha_entrega=fecha_entrega, entregaFile=entregaFile)
                 p.save()
                 return redirect('seed2:dashboardStudent')
         context={ 
@@ -361,7 +364,7 @@ class ActividadCreationView(View):
         }
         return render(request, 'dashboard_docente.html',context)
 
-@method_decorator([login_required], name='dispatch')
+@method_decorator([login_required, docente_required], name='dispatch')
 class ActividadDetailView(View):
 
     def get(self, request, codigo, *args, **kwargs):
@@ -370,10 +373,11 @@ class ActividadDetailView(View):
         context = { 
             'actividad': actividad,
             'entregaActividad' : actividadEstudiante,
+            'form': ActividadCreateForm()
         }
         return render(request, 'Actividad/actividadDetalle.html',context)
 
-@method_decorator([login_required], name='dispatch')
+@method_decorator([login_required, docente_required], name='dispatch')
 class ActividadUpdateView(UpdateView):
     model = Actividad
     fields = {'codigo', 'nombre_ac', 'descripcion', 'estructura_de_datos', 'tema_actividad', 'fecha_inicio', 'fecha_fin', 'es_visible'}
@@ -381,12 +385,13 @@ class ActividadUpdateView(UpdateView):
     success_url = reverse_lazy('seed2:dashboardDocente')
 
 
-@method_decorator([login_required], name='dispatch')
+@method_decorator([login_required, docente_required], name='dispatch')
 class ActividadDeleteView(DeleteView):
     model = Actividad
     template_name = 'Actividad/actividadEliminar.html'
     success_url = reverse_lazy('seed2:dashboardDocente')
 
+@method_decorator([login_required, docente_required], name='dispatch')
 class CalificarActividadView(View): 
     def get(self, request, actividad, estudiante, *args, **kwargs):
         actividadEstudiante = Estudiante_Actividad.objects.filter(activity=actividad, estudiante=estudiante).first()
@@ -398,13 +403,14 @@ class CalificarActividadView(View):
         return render(request, 'Actividad/calificarActividad.html',context)
     
     def post(self, request, actividad, estudiante, *args, **kwargs):
-        actividadEstudiante = Estudiante_Actividad.objects.filter(activity=actividad, estudiante=estudiante).first()
+        actividadEstudiante = Estudiante_Actividad.objects.get(activity=actividad, estudiante=estudiante)
         form = ActividadEstudianteForm(request.POST)
         if form.is_valid():
             actividadEstudiante.nota = form.cleaned_data['nota']
             actividadEstudiante.comentario = form.cleaned_data['comentario']
+            actividadEstudiante.estado = "C"
             actividadEstudiante.save()
-            return redirect('seed2:calificarActividad', actividad, estudiante )
+            return redirect('seed2:detailActividad', actividad)
         context={ 
         }
         return render(request, 'Grupos/dashboard_docente.html',context)

@@ -13,13 +13,32 @@
                     <div class="row">
                         <div class="col-12 col-xl-8 mb-4 mb-xl-0">
                             <h3 class="font-weight-bold">Bienvenido</h3>
-                            <h6 class="font-weight-normal mb-0">Calificar Actividad </h6>
-                            {{entregaActividad}}
-                            <form class="form-horizontal" method="POST">
-                                {% csrf_token %}
-                                {{form.as_p}}
-                                <button type="submit" class="btn btn-primary mr-2">Guardar</button>
-                            </form>
+                            <h4 class="font-weight-normal mb-3">Calificar Actividad - {{entregaActividad.activity}}</h4>
+                            <div class="card w-100 mb-3">
+                                <div class="card-body">
+                                    <h4 class="card-title">{{entregaActividad.estudiante}}</h4>                   
+                                    <div class="form-group">
+                                        <label for="exampleInputName1">Descarcar Entrega</label> <br>
+                                        <a href="{{entregaActividad.entregaFile.url}}" class="btn btn-primary"download>Descargar</a>
+                                        
+                                    </div>  
+                                    <form class="forms-sample" method="POST">
+                                        {% csrf_token %}
+                                        <input type="hidden" name='activity' value="{{entregaActividad.activity.codigo}}">
+                                        <input type="hidden" name='estudiante' value="{{entregaActividad.estudiante.user.id}}">
+                                        <input type="hidden" name='estado' value="C">
+                                        <div class="form-group">
+                                            <label for="exampleInputName1">Comentarios de retroalimentacion</label> <br>
+                                            <input type="text" class="form-control" name="comentario" value="{{entregaActividad.comentario}}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputName1">Calificacion</label>
+                                            <input type="number" class="form-control" name="nota" min='0' max='5' value="{{entregaActividad.nota}}" step="any">
+                                        </div>  
+                                        <button type="submit" class="btn btn-primary mr-2">Guardar</button>
+                                    </form>
+                                </div>  
+                            </div>  
                         </div>
                     </div>
                 </div>

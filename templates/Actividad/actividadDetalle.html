@@ -30,21 +30,44 @@
                             <div class="row">
                                 <p class="text-dark mr-3">{{actividad.fecha_inicio}} - {{actividad.fecha_fin}}</p>
                             </div>
-                            <!-- Listado de estudiantes que entregaron actividades"-->
-                                {% for ae in entregaActividad%}
-                                    {{ae.estudiante}} <br>
-                                    {{ae.fecha_entrega}} <br>
-                                    {{ae.activity.codigo }}
-                                    {{ae.estudiante.user.id}}
-                                <a href="{% url 'seed2:calificarActividad' ae.estudiante.user.id ae.activity.codigo %}" class="btn btn-primary">
-                                    CALIFICAR
-                                </a>
-                                {% endfor %}
-                            <!-- FIN Listado de estudiantes que entregaron actividades"-->
-                        </div>
+                        </div>          
                     </div>
                     <!--fin espacio para las actividades-->
                 </div>
+                <div class="card w-100 mr-3 mb-3">
+                    <div class="col m-3 grid-margin transparent">
+                        <div class="card-body">
+                            <h2 class="">Estudiantes</h2> 
+                            <!-- Listado de estudiantes que entregaron actividades"-->
+                            <div class="table-responsive">
+                                <table class="table table-hover" id="DataTable">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Estudiante</th>
+                                            <th scope="col">Estado</th>
+                                            <th scope="col">Calificar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- td table -->
+                                        {% for ae in entregaActividad%}
+                                        <tr>
+                                            <td>{{ae.estudiante}}</td>
+                                            <td>{{ae.get_estado_display}}</td>
+                                            <td>
+                                                <a href="{% url 'seed2:calificarActividad' ae.estudiante.user.id ae.activity.codigo %}" class="btn btn-primary">
+                                                    CALIFICAR
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <!-- FIN Listado de estudiantes que entregaron actividades"-->
             </div>
             <!--espacio para actividades grupos-->
             <div class="col-md-5 grid-margin">
@@ -96,16 +119,6 @@
                                                 {{form.es_visible}} Mostrar
                                             </label>
                                         </div>
-                                    </div>
-                                    <div class="row pl-3 pr-3 pb-3">
-                                    <label for="exampleTextarea1">Visibilidad
-                                    <div class="form-check col">
-                                        <label class="form-check-label">
-                                        {{form.es_visible}} 
-                                        Mostrar
-                                        </label>
-                                    </div></label>
-                                    
                                     </div>
                                 <button type="submit" class="btn btn-block btn-primary mr-2">Update</button>   
                             </form>

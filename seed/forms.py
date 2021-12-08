@@ -49,7 +49,7 @@ class TemaCreateForm(forms.ModelForm):
 class ActividadEstudianteForm(forms.ModelForm):
     class Meta:
         model = Estudiante_Actividad
-        fields = {'estudiante', 'activity', 'estado', 'nota', 'comentario', 'fecha_entrega'}
+        fields = {'estudiante', 'activity', 'estado', 'nota', 'comentario', 'fecha_entrega', 'entregaFile'}
         format = {'fecha_entrega': DateTimeInput(attrs={'type': 'datetime-local', 'timezone': 'America/Bogota'},),}
         
         
