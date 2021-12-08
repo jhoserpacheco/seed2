@@ -442,8 +442,7 @@ class TemaCreationView(View):
                 codigo_tema = form.cleaned_data['codigo_tema']
                 nombre_tema = form.cleaned_data['nombre_tema']
                 grupo_tema = form.cleaned_data['grupo_tema'] 
-                estado = 'C'
-                p, created = Tema.objects.get_or_create(codigo_tema=codigo_tema, nombre_tema=nombre_tema, grupo_tema=grupo_tema, estado=estado)
+                p, created = Tema.objects.get_or_create(codigo_tema=codigo_tema, nombre_tema=nombre_tema, grupo_tema=grupo_tema)
                 p.save()
                 form.save()
                 return redirect('seed2:createTema')
