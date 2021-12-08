@@ -394,7 +394,7 @@ class ActividadDeleteView(DeleteView):
 @method_decorator([login_required, docente_required], name='dispatch')
 class CalificarActividadView(View): 
     def get(self, request, actividad, estudiante, *args, **kwargs):
-        actividadEstudiante = Estudiante_Actividad.objects.filter(activity=actividad, estudiante=estudiante).first()
+        actividadEstudiante = Estudiante_Actividad.objects.get(activity=actividad, estudiante=estudiante)
         form = ActividadEstudianteForm()
         context = { 
             'form':form,
