@@ -218,8 +218,7 @@ class SubirActividadEstudianteView(View):
                                                             nota=nota, comentario=comentario, fecha_entrega=fecha_entrega, entregaFile=entregaFile)
                 p.save()
                 return redirect('seed2:dashboardStudent')
-        context={ 
-            
+        context={             
         }
         return render(request, 'Grupos/dashboard_estudiante.html',context)
 
@@ -500,7 +499,9 @@ CRUD DE ESTUDIANTE ACTIVIDAD
 class GrupoDetailStudentView(View):
     def get(self, request, codigo_grupo, *args, **kwargs):
         grupo = get_object_or_404(Grupo, codigo_grupo=codigo_grupo)
-        tema = Tema.objects.filter(grupo_tema=codigo_grupo)
+        tema = Tema.objects.filter(
+            grupo_tema=codigo_grupo
+            )
         actividad = Actividad.objects.filter(
             tema_actividad=Subquery(tema.values('codigo_tema'))
         )
