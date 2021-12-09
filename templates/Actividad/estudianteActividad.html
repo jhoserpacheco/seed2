@@ -38,7 +38,10 @@
                                    
                                         <form class="forms-sample" method="POST" enctype = 'multipart/form-data'>
                                             {% csrf_token%}
-                                            
+                                            <div class="form-group col">
+                                                <input class="form-control"  id="activity" name="activity" value="{{actividad.codigo}}" type="hidden">
+                                            </div>
+                                            <input class="form-control"  id="fecha_entrega" value="{{now}}" name="fecha_entrega" type="datetime-local" hidden>
                                             <div class="form-group col">
                                                 <input class="form-control"  id="estudiante" name="estudiante" value="{{user.get_estudiante.user.id}}" type="hidden">
                                             </div>

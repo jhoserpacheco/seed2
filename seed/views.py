@@ -408,6 +408,34 @@ class TemaActividadView(View):
         }
         return render(request, 'Tema/temaActividades.html', context)
 
+class ListaCalificacionesView(View):
+    def get(self, request,grupo, *args, **kwargs):
+        estudiantes = list(get_object_or_404(Grupo, codigo_grupo=grupo).estudiante_set.all())
+        tema = list((Tema.objects.filter(grupo_tema=grupo)))
+        #actividadEstudiante = Estudiante_Actividad.objects.get().all()
+        e = ListaCalificacionesView.listEstudiantes(estudiantes)
+        t = ListaCalificacionesView.listTemas(tema)
+        ea = Estudiante_Actividad.objects.filter(estudiante=estudiantes[3].user.id)
+        context = { 
+            'grupo': e,
+            'tema': t,
+            'soy': estudiantes[3].user.id,
+            'entregaActividad' : ea[0].nota,
+        }
+        return render(request, 'Actividad/calificaciones.html',context)
+
+    def listEstudiantes(estudiantes):
+        e = []
+        for estudiante in estudiantes:
+            e.append(estudiante.__str__())
+        return e
+
+    def listTemas(temas):
+        t = []
+        for tema in temas:
+            t.append(tema.nombre_tema)
+        return t
+
 
 """
 -------------------------------------------------------ESTUDIANTE ---------------------------------------------------------------------------------
