@@ -1,0 +1,88 @@
+{% extends "layouts/base-fullscreen.html" %}
+{%load static%}
+{% block title %} Temas {% endblock %}
+{%load static%}
+{% block content %} 
+
+
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 grid-margin">
+                <div class="row">
+                    <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                        <h3 class="font-weight-bold">Bienvenido</h3>
+                        <h6 class="font-weight-normal mb-0">Temas</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!--espacio para las actividades-->
+            <div class="col-md-12 grid-margin">
+                {% for g in grupos%}
+                    <h2 class="display-2">Grupo {{g.nombre}}</h2>               
+                    <div class="p-3">
+                        {% for t in temas%}
+                            <div class="card  mb-3">
+                                <div class="card-body ">
+                                <!--Actividades-->                        
+                                    <div class="row ">
+                                        <div class="col">                                        
+                                            <h2 class="pl-3">
+                                                <a href="#" style="text-decoration: none !important; color: black"> 
+                                                    Tema: {{t.nombre_tema}} 
+                                                </a>
+                                            </h2>
+                                            <h2 class="display-4 d-flex justify-content-center align-items-center">Actividades</h2>
+                                            <div class="row">
+                                                
+                                                
+                                                {% for a in actividades%}
+                                                    <div class="col m-3  grid-margin transparent" >
+                                                        <div class="card card-tale" >
+                                                            <div class="card-body">
+                                                                    <a href="{% url 'seed2:uploadActividad' a.codigo %}" style="text-decoration: none !important; color: white">
+                                                                        <p class="fs-30 mb-2">{{a.nombre_ac}}</p>                                                                        
+                                                                    <a/>
+                                                            </div>
+                                                        </div>
+                                                    </div>  
+                                                {% endfor%}
+                                            </div>
+                                        </div>
+                                    </div>                        
+                                <!--fin actividades-->
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+                
+            </div>
+            <!--fin espacio para las actividades-->
+        </div>
+    </div>
+    <!-- content-wrapper ends -->
+</div>
+
+
+
+  {% endblock content %}
+  
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<!-- Plugin js for this page -->
+  <script src="{%static 'vendors/chart.js/Chart.min.js'%}"></script>
+  <script src="{%static 'vendors/datatables.net/jquery.dataTables.js'%}"></script>
+  <script src="{%static 'vendors/datatables.net-bs4/dataTables.bootstrap4.js'%}"></script>
+  <script src="{%static 'js/dataTables.select.min.js'%}"></script>
+  <!-- End plugin js for this page -->
+  <!-- Custom js for this page-->
+  <script src="{%static 'js/dashboard.js'%}"></script>
+  <script src="{%static 'js/Chart.roundedBarCharts.js'%}"></script>
+  <script src="{%static 'js/sweetAlert.js'%}"></script>
+  <!-- End custom js for this page-->
+{% endblock javascripts %} 

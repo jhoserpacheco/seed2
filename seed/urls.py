@@ -49,6 +49,7 @@ urlpatterns = [
     path('dashboardDocente/tema/<pk>/update/', TemaUpdateView.as_view(), name='updateTema'),
     path('dashboardDocente/tema/<pk>/delete/', TemaDeleteView.as_view(), name='deleteTema'), 
     path('dashboardDocente/tema/<pk>/actividades/', TemaActividadView.as_view(), name='temaActividades'), 
+    path('dashboardEstudiante/tema/', TemasEstudiantesView.as_view(), name='temasEstudiante'), 
     
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

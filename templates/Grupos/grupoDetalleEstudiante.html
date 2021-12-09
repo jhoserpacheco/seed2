@@ -28,15 +28,6 @@
                                 <div class="row">
                                     <h1 class="display-1 col-9">{{grupo.nombre}}</h1>
                                     <div class="col-3">
-                                        <div class="d-flex justify-content-center align-items-start">                                            
-                                            <!--<button type="button" onclick="warningDeleteGrupo(nombre='{{grupo.nombre}}',pk='{{grupo.codigo_grupo}}',padre='1')" class="ml-3 btn btn-inverse-primary ">
-                                            Eliminar
-                                            </button> 
-                                            <button type="button"  class="ml-3 btn btn-inverse-primary ">
-                                                Eliminar
-                                            </button> 
-                                            -->
-                                        </div> 
                                     </div>                                
                                 </div>
                                 <h1 class="display-3">Codigo: {{grupo.codigo_grupo}}</h1>
@@ -88,9 +79,9 @@
                             </div>
                             <div class="row">
                                 <ul class="ml-3">
-                                    <!--{% for t in temas%}
+                                    {% for t in temas%}
                                         <li class="">{{t}}</li>
-                                    {% endfor %}-->
+                                    {% endfor %}
                                 </ul>
                             </div>                        
                         </div>   
@@ -102,9 +93,10 @@
                             </div>
                             <div class="row">
                                 <ul class="ml-3">
-                                    <!--{% for a in actividades%}
-                                    <li class="">{{a}}</li>
-                                    {% endfor %} --> 
+                                    
+                                    {% for a in actividades%}
+                                    <li class=""><a href="{% url 'seed2:uploadActividad' a.codigo %}">{{a}}</a></li>
+                                    {% endfor %} 
                                 </ul>
                             </div>                        
                         </div>    
@@ -115,14 +107,7 @@
                     <div class="card w-100">
                         <div class="card-body">
                         <h4 class="card-title">Informacion General</h4>
-                        <ul class="">
-                            <form method="POST">
-                                {% csrf_token %}
-                                {{ form.as_p }}
-                                <input type="submit" value="Update">
-                            </form> 
-                            <li><a href="">item 1</li>
-                        </ul>
+                        
                         </div>
                     </div>
                 </div>

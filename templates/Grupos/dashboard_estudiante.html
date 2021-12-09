@@ -23,39 +23,24 @@
                     </div> 
                     <div class="row">
                         {% for g in grupos %}
-                        <div class="col m-3  grid-margin transparent" >
-                            <div class="card card-tale" >
-                                <div class="card-body">                                    
-                                        <div class="row">
-                                            <p class="mb-4 col" >{{g.codigo_grupo}}</p>
-                                        </div>
-                                        <a href="{% url 'seed2:detailGrupoStudent' g.codigo_grupo %}" style="text-decoration: none !important; color: white">
-                                            <p class="fs-30 mb-2">{{g.nombre}}</p>
-                                            <p>{{g.docente}}</p>
-                                        <a/>
-                                </div>
+                            <div class="col m-3  grid-margin transparent" >
+                                <div class="card card-tale" >
+                                    <div class="card-body">                                    
+                                            <div class="row">
+                                                <p class="mb-4 col" >{{g.codigo_grupo}}</p>
+                                            </div>
+                                            <a href="{% url 'seed2:detailGrupoStudent' g.codigo_grupo %}" style="text-decoration: none !important; color: white">
+                                                <p class="fs-30 mb-2">{{g.nombre}}</p>
+                                                <p>{{g.docente}}</p>
+                                            <a/>
+                                    </div>
+                                </div>                            
                             </div>
-                            
-                        </div>
                         {% endfor %}
                     </div> 
                 </div>
             </div>
         </div>
-        <h1> TEMA </h1>
-        {% for t in temas %}
-            <h3>{{t}}</h3>
-        {% endfor %}
-        <h1> ACTIVIDADES </h1>
-        <ul class="list-group">
-            {% for a in actividades %}
-                <h4> 
-                    <li class="list-item"> 
-                            <a href="{% url 'seed2:uploadActividad' a.codigo %}">{{a}}</a>
-                    </li>
-                </h4>
-            {% endfor %}
-        </ul>
     </div>
 </div>
 
