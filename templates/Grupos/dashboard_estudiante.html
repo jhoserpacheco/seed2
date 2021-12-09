@@ -47,9 +47,15 @@
             <h3>{{t}}</h3>
         {% endfor %}
         <h1> ACTIVIDADES </h1>
-        {% for a in actividades %}
-            <a href="{% url 'seed2:uploadActividad' a.codigo %}">{{a}}</a>
-        {% endfor %}
+        <ul class="list-group">
+            {% for a in actividades %}
+                <h4> 
+                    <li class="list-item"> 
+                            <a href="{% url 'seed2:uploadActividad' a.codigo %}">{{a}}</a>
+                    </li>
+                </h4>
+            {% endfor %}
+        </ul>
     </div>
 </div>
 
