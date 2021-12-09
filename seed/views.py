@@ -96,6 +96,16 @@ class ProfileView(View):
         return render(request, 'profileGoogle.html', context)
 
 
+@method_decorator([login_required, docente_required], name='dispatch')
+class DashboardDocenteView(View):
+    def get(self, request, *args, **kwargs):
+        context = { 
+            'grupos': Grupo.objects.all(),
+            'actividades': Actividad.objects.all(),
+            'temas': Tema.objects.all()
+        }
+        return render(request, 'Grupos/dashboard_docente.html', context)
+        
 
 @method_decorator([login_required], name='dispatch')
 class CreateTeacherView(View):
@@ -137,74 +147,6 @@ class CreateStudentView(View):
             'form':form 
         }
         return render(request, 'profileGoogle.html', context)
-
-@method_decorator([login_required, docente_required], name='dispatch')
-class DashboardDocenteView(View):
-    def get(self, request, *args, **kwargs):
-        context = { 
-            'grupos': Grupo.objects.all(),
-            'actividades': Actividad.objects.all(),
-            'temas': Tema.objects.all()
-        }
-        return render(request, 'Grupos/dashboard_docente.html', context)
-@method_decorator([login_required, estudiante_required], name='dispatch')
-class DashboardStudentView(View):
-    def get(self, request, *args, **kwargs):
-        grupos = Grupo.objects.filter(codigo_grupo=request.user.get_estudiante().grupo.codigo_grupo).all()
-        tema = Tema.objects.filter(grupo_tema=request.user.get_estudiante().grupo.codigo_grupo)
-        actividad = Actividad.objects.filter(tema_actividad=Subquery(tema.values('codigo_tema')))
-        context = { 
-            'grupos': grupos,
-            'temas': tema, 
-            'actividades': actividad
-        }
-        return render(request, 'Grupos/dashboard_estudiante.html', context)
-
-"""
-Estudiante subir actividad
-"""
-class SubirActividadEstudianteView(View):
-    def get(self, request, pk,*args, **kwargs):
-        form = ActividadEstudianteForm()
-        actividad = Actividad.objects.filter(codigo=pk).first()
-        context = { 
-            'actividad': actividad,
-            'now': actividad.getNow(),
-            'form':form, 
-            'actividadSubida': self.validarEntrega(actividad.codigo, request.user.get_estudiante().user.id, request)
-        }
-        return render(request, 'Actividad/estudianteActividad.html', context)
-
-    def post(self, request, pk, *args, **kwargs):
-        if request.method == 'POST':
-            form = ActividadEstudianteForm(request.POST, request.FILES)
-
-            print(form)
-            if form.is_valid() and not self.validarEntrega(pk, request.user.get_estudiante().user.id, request):
-                estudiante = form.cleaned_data['estudiante']
-                activity = form.cleaned_data['activity']
-                estado = form.cleaned_data['estado']
-                nota = form.cleaned_data['nota'] 
-                comentario = form.cleaned_data['comentario'] 
-                fecha_entrega = form.cleaned_data['fecha_entrega'] 
-                entregaFile = form.cleaned_data['entregaFile']
-                
-                p, created = Estudiante_Actividad.objects.get_or_create(estudiante=estudiante, activity=activity, estado=estado,
-                                                            nota=nota, comentario=comentario, fecha_entrega=fecha_entrega, entregaFile=entregaFile)
-                p.save()
-                return redirect('seed2:dashboardStudent')
-        context={             
-        }
-        return render(request, 'Grupos/dashboard_estudiante.html',context)
-
-    def validarEntrega(self, pk, e, request, *args, **kwargs):
-        actividad = Actividad.objects.filter(codigo=pk, estudianteAct = e).first()
-        ae = Estudiante_Actividad.objects.filter(activity=actividad, estudiante=e).all()
-        print(pk)
-        return len(ae) > 0
-        
-
-
 
 """
 CRUD DE GRUPOS 
@@ -483,6 +425,50 @@ class DashboardStudentView(View):
             'actividades': actividad
         }
         return render(request, 'Grupos/dashboard_estudiante.html', context)
+
+"""
+Estudiante subir actividad
+"""
+class SubirActividadEstudianteView(View):
+    def get(self, request, pk,*args, **kwargs):
+        form = ActividadEstudianteForm()
+        actividad = Actividad.objects.filter(codigo=pk).first()
+        context = { 
+            'actividad': actividad,
+            'now': actividad.getNow(),
+            'form':form, 
+            'actividadSubida': self.validarEntrega(actividad.codigo, request.user.get_estudiante().user.id, request)
+        }
+        return render(request, 'Actividad/estudianteActividad.html', context)
+
+    def post(self, request, pk, *args, **kwargs):
+        if request.method == 'POST':
+            form = ActividadEstudianteForm(request.POST, request.FILES)
+
+            print(form)
+            if form.is_valid() and not self.validarEntrega(pk, request.user.get_estudiante().user.id, request):
+                estudiante = form.cleaned_data['estudiante']
+                activity = form.cleaned_data['activity']
+                estado = form.cleaned_data['estado']
+                nota = form.cleaned_data['nota'] 
+                comentario = form.cleaned_data['comentario'] 
+                fecha_entrega = form.cleaned_data['fecha_entrega'] 
+                entregaFile = form.cleaned_data['entregaFile']
+                
+                p, created = Estudiante_Actividad.objects.get_or_create(estudiante=estudiante, activity=activity, estado=estado,
+                                                            nota=nota, comentario=comentario, fecha_entrega=fecha_entrega, entregaFile=entregaFile)
+                p.save()
+                return redirect('seed2:dashboardStudent')
+        context={             
+        }
+        return render(request, 'Grupos/dashboard_estudiante.html',context)
+
+    def validarEntrega(self, pk, e, request, *args, **kwargs):
+        actividad = Actividad.objects.filter(codigo=pk, estudianteAct = e).first()
+        ae = Estudiante_Actividad.objects.filter(activity=actividad, estudiante=e).all()
+        print(pk)
+        return len(ae) > 0
+
 
 """
 CRUD DE ESTUDIANTE ACTIVIDAD
