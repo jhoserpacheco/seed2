@@ -63,33 +63,8 @@ class logou(View):
 
 class logi(View):
     def get(self, request, *args, **kwargs):
-        print("...validando template...")
         context={}
         return render(request, 'Cuenta/login.html', context)
-    def post(self, request, *args, **kwargs):
-        if request.method == 'POST':
-            print("...validando post user...")
-            username = request.POST['useremail']
-            password = request.POST['userpassword']
-            user = authenticate(username=username, password=password)
-            """if user is not None:
-                login(request, user)
-                if user.is_docente:
-                    print("userrrrrrrrrrrrrrrrr", request.user.is_docente)
-                return redirect('seed2:dashboardDocente')
-            else:
-                return redirect('seed2:login')
-                """
-    def redirect(self, request, *args, **kwargs):
-        print("...validando direccionamiento...")
-        if request.use is None:
-            if request.user.is_docente:
-                pass
-                #return redirect('seed2:dashboardDocente')
-            else:
-                return redirect('seed2:dashboardEstudiante')
-        else:
-            return redirect('seed2:login')
 
 class loging(View):
     def get(self, request, *args, **kwargs):
@@ -512,3 +487,17 @@ class GrupoDetailStudentView(View):
             'actividades': actividad
         }
         return render(request, 'Grupos/grupoDetalleEstudiante.html',context)
+
+@method_decorator([login_required], name='dispatch')
+class TemasEstudiantesView(View):
+    def get(self, request, *args, **kwargs):
+        grupos = Grupo.objects.filter(codigo_grupo=request.user.get_estudiante().grupo.codigo_grupo).all()
+        print("grupos", grupos)
+        tema = Tema.objects.filter(grupo_tema=request.user.get_estudiante().grupo.codigo_grupo)
+        actividad = Actividad.objects.filter(tema_actividad=Subquery(tema.values('codigo_tema')))
+        context = { 
+            'grupos': grupos,
+            'temas': tema, 
+            'actividades': actividad
+        }
+        return render(request, 'Tema/temasEstudiante.html', context)
