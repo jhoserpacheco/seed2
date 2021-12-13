@@ -15,7 +15,8 @@
 #### Run server 
 ``python manage.py runserver``
 
-<hr />
+<hr/>
+
 ### Autores
 
 **Jhoser Fabian Pacheco Quintero - Backend**
