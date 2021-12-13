@@ -1,3 +1,5 @@
+![Alt text](static/images/logo.svg "SEED2")
+<hr />
 ### Clone repository use
 ``git clone https://github.com/jhoserpacheco/seed2.git``
 
@@ -12,3 +14,13 @@
 
 #### Run server 
 ``python manage.py runserver``
+
+<hr />
+### Autores
+
+**Jhoser Fabian Pacheco Quintero - Backend**
+
+- <https://github.com/jhoserpacheco>
+
+**Ronald Eduardo Benitez Mejia - Frontend**
+- <https://github.com/robeedbenitez>
