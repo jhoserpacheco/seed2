@@ -1,6 +1,9 @@
 ![Alt text](static/images/logo.svg "SEED2")
 <hr />
+
+## Installation
 ### Clone repository use
+
 ``git clone https://github.com/jhoserpacheco/seed2.git``
 
 #### Change directory and Activate Environment
@@ -17,7 +20,7 @@
 
 <hr/>
 
-### Autores
+## Autores
 
 **Jhoser Fabian Pacheco Quintero - Backend**
 
