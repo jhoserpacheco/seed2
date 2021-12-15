@@ -15,6 +15,8 @@ from django.urls import reverse_lazy
 
 import environ
 import os
+# heroku settings
+import django_heroku
 from django.urls import reverse_lazy
 env = environ.Env()
 environ.Env.read_env()
@@ -186,3 +188,7 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# heroku settings
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+django_heroku.settings(locals())
