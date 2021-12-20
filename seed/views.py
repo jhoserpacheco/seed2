@@ -49,7 +49,7 @@ def login_success(request):
     elif request.user.is_estudiante:
         return redirect('seed2:dashboardStudent')
     else:
-        return redirect('seed2:login')
+        return redirect('seed2:dashboardDocente')
 
 
 #login de django
@@ -96,7 +96,7 @@ class ProfileView(View):
         return render(request, 'profileGoogle.html', context)
 
 
-@method_decorator([login_required, docente_required], name='dispatch')
+@method_decorator([login_required], name='dispatch')
 class DashboardDocenteView(View):
     def get(self, request, *args, **kwargs):
         context = { 
@@ -152,7 +152,7 @@ class CreateStudentView(View):
 CRUD DE GRUPOS 
 """
 
-@method_decorator([login_required, docente_required], name='dispatch')
+@method_decorator([login_required], name='dispatch')
 class GrupoCreationView(View):
     def get(self, request, *args, **kwargs):
         form = GrupoCreateForm()
@@ -207,7 +207,7 @@ class GrupoCreationView(View):
                 
 
 
-@method_decorator([login_required, docente_required], name='dispatch')
+@method_decorator([login_required], name='dispatch')
 class GrupoDetailView(View):
     def get(self, request, codigo_grupo, *args, **kwargs):
         grupo = get_object_or_404(Grupo, codigo_grupo=codigo_grupo)
@@ -278,7 +278,7 @@ class ActividadCreationView(View):
         }
         return render(request, 'dashboard_docente.html',context)
 
-@method_decorator([login_required, docente_required], name='dispatch')
+@method_decorator([login_required], name='dispatch')
 class ActividadDetailView(View):
 
     def get(self, request, codigo, *args, **kwargs):
@@ -291,7 +291,7 @@ class ActividadDetailView(View):
         }
         return render(request, 'Actividad/actividadDetalle.html',context)
 
-@method_decorator([login_required, docente_required], name='dispatch')
+@method_decorator([login_required], name='dispatch')
 class ActividadUpdateView(UpdateView):
     model = Actividad
     fields = {'codigo', 'nombre_ac', 'descripcion', 'estructura_de_datos', 'tema_actividad', 'fecha_inicio', 'fecha_fin', 'es_visible'}
@@ -299,13 +299,13 @@ class ActividadUpdateView(UpdateView):
     success_url = reverse_lazy('seed2:dashboardDocente')
 
 
-@method_decorator([login_required, docente_required], name='dispatch')
+@method_decorator([login_required], name='dispatch')
 class ActividadDeleteView(DeleteView):
     model = Actividad
     template_name = 'Actividad/actividadEliminar.html'
     success_url = reverse_lazy('seed2:dashboardDocente')
 
-@method_decorator([login_required, docente_required], name='dispatch')
+@method_decorator([login_required], name='dispatch')
 class CalificarActividadView(View): 
     def get(self, request, actividad, estudiante, *args, **kwargs):
         actividadEstudiante = Estudiante_Actividad.objects.get(activity=actividad, estudiante=estudiante)
