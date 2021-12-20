@@ -16,7 +16,7 @@ app_name = 'seed2'
 
 urlpatterns = [
     path('',logi.as_view(), name='login'),
-    path(r'login_success/$', login_success, name='login_success'),
+    path('login_success/', login_success, name='login_success'),
     path('logout/',logou.as_view(), name='logout'),
     #path('loging/', loging.as_view(), name='loging'),
     path('accounts/login/', auth_views.LoginView.as_view()),
@@ -32,9 +32,9 @@ urlpatterns = [
     path('dashboardEstudiante/grupos/<codigo_grupo>/', GrupoDetailStudentView.as_view(), name='detailGrupoStudent'),
     path('dashboardDocente/grupos/<pk>/update/', GrupoUpdateView.as_view(), name='updateGrupo'),
     path('dashboardDocente/grupos/<pk>/delete/', GrupoDeleteView.as_view(), name='deleteGrupo'),
-    path(r'eliminar_grupo/$', eliminar_grupo, name='eliminar_grupo'),#url de ajax para eliminar identificador(grupo)
-    path(r'eliminar_tema/$', eliminar_tema, name='eliminar_tema'),#url de ajax para eliminar identificador(tema)
-    path(r'eliminar_actividad/$', eliminar_actividad, name='eliminar_actividad'),#url de ajax para eliminar identificador(actividad)
+    path('eliminar_grupo/', eliminar_grupo, name='eliminar_grupo'),#url de ajax para eliminar identificador(grupo)
+    path('eliminar_tema/', eliminar_tema, name='eliminar_tema'),#url de ajax para eliminar identificador(tema)
+    path('eliminar_actividad/', eliminar_actividad, name='eliminar_actividad'),#url de ajax para eliminar identificador(actividad)
 
     ## Actividad
     path('dashboardDocente/actividad/create', ActividadCreationView.as_view(), name='createActividad'),
