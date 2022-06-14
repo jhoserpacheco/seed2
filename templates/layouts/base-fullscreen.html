@@ -41,11 +41,20 @@
         <div class="container-fluid page-body-wrapper">
             {% include 'includes/_navbar.html' %}
             
-                {% include 'includes/_sidebar.html' %}
+                
             
-            {% if user.is_estudiante%} 
-                {% include 'includes/_sidebarEstudiante.html' %}
+            {% if  user.is_docente and  user.is_estudiante%} 
+                {% include 'includes/_sidebar.html' %}
+                {% else%}
+                    {% if user.is_estudiante%}
+                        {% include 'includes/_sidebarEstudiante.html' %}
+                        {% else %}
+                            {% if user.is_docente%}
+                                {% include 'includes/_sidebar.html' %}
+                        {% endif %}
+                    {% endif %}                
             {% endif %}
+
             {% block content %}{% endblock content %}
             {% include 'includes/_settings-panel.html' %}
         </div>        

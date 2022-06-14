@@ -44,7 +44,7 @@ def login_success(request):
     """
     Redirects users based on whether they are in the admins group
     """
-    if request.user.is_docente:
+    if request.user.is_docente and request.user.is_estudiante:
         return redirect('seed2:dashboardDocente')
     elif request.user.is_estudiante:
         return redirect('seed2:dashboardStudent')
